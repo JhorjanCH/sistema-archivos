@@ -22,6 +22,26 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Sweetalert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+    <style>
+        .dropdown-toggle{
+            background: white;
+            border: 0;
+        }
+        .dropdown-toggle::after{
+            display: none;
+        }
+        .divcontent {
+            background: white;
+            border: 1px solid #c0c0c0;
+            border-radius: 10px;
+            margin-top: 10px
+        }
+        .divcontent:hover {
+            box-shadow: 0 0 5px rgb(0,0,0,0.5);
+            transition: box-shadow 0.3ms ease;
+        }
+    </style>
+
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
@@ -65,7 +85,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- Brand Logo -->
         <a href="{{url('/')}}" class="brand-link">
             <img src="{{asset('dist/img/AdminLTELogo.png')}}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-            <span class="brand-text font-weight-light">CRUD</span>
+            <span class="brand-text font-weight-light">BIENVENIDO</span>
         </a>
 
         <!-- Sidebar -->
@@ -157,9 +177,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
         @if( ($message = Session::get('mensaje')) && ($icono = Session::get('icono')) )
             <script>
                 Swal.fire({
-                    title: "Mensaje",
-                    text: "{{$message}}",
-                    icon: "{{$icono}}"
+                    position: "center",
+                    icon: "{{$icono}}",
+                    title: "{{$message}}",
+                    showConfirmButton: false,
+                    timer: 2000
                 });
             </script>
         @endif

@@ -35,4 +35,8 @@ Route::delete('/admin/usuarios/{id}', [App\Http\Controllers\UsuarioController::c
 Route::get('/registro', [App\Http\Controllers\UsuarioController::class, 'registro'])->name('admin.index');
 Route::post('/registro', [App\Http\Controllers\UsuarioController::class, 'registro_create'])->name('registro');
 
-Route::get('/admin/mi_unidad', [App\Http\Controllers\CarpetaController::class, 'index'])->name('mi_unida.index')->middleware('auth');
+Route::get('/admin/mi_unidad', [App\Http\Controllers\CarpetaController::class, 'index'])->name('mi_unidad.index')->middleware('auth');
+Route::post('/admin/mi_unidad', [App\Http\Controllers\CarpetaController::class, 'store'])->name('mi_unidad.store')->middleware('auth');
+Route::get('/admin/mi_unidad/carpeta/{id}', [App\Http\Controllers\CarpetaController::class, 'show'])->name('mi_unidad.carpeta')->middleware('auth');
+Route::post('/admin/mi_unidad/carpeta', [App\Http\Controllers\CarpetaController::class, 'crear_subcarpeta'])->name('mi_unidad.carpeta.crear_subcarpeta')->middleware('auth');
+Route::put('/admin/mi_unidad', [App\Http\Controllers\CarpetaController::class, 'update'])->name('mi_unidad.update')->middleware('auth');
