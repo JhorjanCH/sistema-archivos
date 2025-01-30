@@ -50,7 +50,8 @@ class CarpetaController extends Controller
     {
         $carpeta = Carpeta::findOrFail($id);
         $subcarpetas = $carpeta->carpetasHijas;
-        return view('admin.mi_unidad.show',compact('carpeta','subcarpetas'));
+        $archivos = $carpeta->archivos;
+        return view('admin.mi_unidad.show',compact('carpeta','subcarpetas','archivos'));
     }
 
     /**
@@ -80,6 +81,15 @@ class CarpetaController extends Controller
             ->with('mensaje','Se cambio el nombre de la carpeta de la manera correcta')
             ->with('icono','success');
     }
+    public function update_color(Request $request)
+    {
+        $id = $request->id;
+        $carpeta = Carpeta::find($id);
+        $carpeta->color = $request->color;
+        $carpeta->save();
+
+        return redirect()->back();
+    }
 
     /**
      * Remove the specified resource from storage.
@@ -107,5 +117,29 @@ class CarpetaController extends Controller
             ->with('icono','success');
 
     }
+    public function update_subcarpeta(Request $request) {
 
+        $request->validate([
+            'nombre' => 'required|max:191',
+
+        ]);
+
+        $id = $request->id;
+        $carpeta = Carpeta::find($id);
+        $carpeta->nombre = $request->nombre;
+        $carpeta->save();
+
+        return redirect()->back()
+            ->with('mensaje','Se actualizó la carpeta de la manera correcta')
+            ->with('icono','success');
+
+    }
+    public function update_subcarpeta_color(Request $request) {
+        $id = $request->id;
+        $carpeta = Carpeta::find($id);
+        $carpeta->color = $request->color;
+        $carpeta->save();
+
+        return redirect()->back();
+    }
 }

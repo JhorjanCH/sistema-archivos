@@ -2,63 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Archivo;
 use Illuminate\Http\Request;
 
 class ArchivoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
+   public function upload(Request $request) {
+        $id = $request->id;
+        $file = $request->file('file');
+        $fileName = time().'-'.$file->getClientOriginalName();
+        $request->file('file')->storeAs($id,$fileName,'public'); //Cargar de forma pública
+        //$request->file('file')->storeAs($id,$fileName); //Cargar de forma privada
+        //$file->move(public_path($id),$fileName);
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
+        $archivo = new Archivo();
+        $archivo->carpeta_id = $request->id;
+        $archivo->nombre = $fileName;
+        $archivo->save();
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
+        return redirect()->back()
+            ->with('mensaje', 'Se cargo el archivo de la manera correcta')
+            ->with('icono','success');
+   }
 }

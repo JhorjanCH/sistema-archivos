@@ -51,10 +51,10 @@
     <div class="row">
         @foreach($carpetas as $carpeta)
             <div class="col-md-3">
-                <div class="divcontent">
+                <div class="divcontent" data-toggle="tooltip" data-placement="bottom" title="{{$carpeta->nombre}}">
                     <div class="row" style="padding: 10px">
                         <div class="col-2" style="text-align: center">
-                            <i class="bi bi-folder" style="font-size: 20pt"></i>
+                            <i class="bi bi-folder-fill" style="font-size: 20pt;color: {{$carpeta->color}}"></i>
                         </div>
                         <div class="col-8" style="margin-top: 7px">
                             <a href="{{url('/admin/mi_unidad/carpeta',$carpeta->id)}}" style="color: black">
@@ -68,6 +68,55 @@
                                 </button>
                                 <div class="dropdown-menu">
                                     <a class="dropdown-item" href="#" data-toggle="modal" data-target="#Modal_cambiar_nombre{{$carpeta->id}}"><i class="bi bi-pencil"></i> Cambiar nombre
+                                    </a>
+                                    <a class="dropdown-item" href="#"><i class="bi bi-front"></i> Color de la carpeta
+                                    <div class="btn-group" role="group" aria-label="Basic example">
+                                    <form action="{{url('/admin/mi_unidad')}}" method="post">
+                                            @csrf
+                                            @method('PUT')
+                                            <input type="text" value="blue" name="color" hidden>
+                                            <input type="text" value="{{$carpeta->id}}" name="id" hidden>
+                                            <button type="submit" style="background-color: white;border: 0px">
+                                                <i class="bi bi-circle-fill" style="color: blue"></i>
+                                            </button>
+                                        </form>
+                                        <form action="{{url('/admin/mi_unidad')}}" method="post">
+                                            @csrf
+                                            @method('PUT')
+                                            <input type="text" value="red" name="color" hidden>
+                                            <input type="text" value="{{$carpeta->id}}" name="id" hidden>
+                                            <button type="submit" style="background-color: white;border: 0px">
+                                                <i class="bi bi-circle-fill" style="color: red"></i>
+                                            </button>
+                                        </form>
+                                        <form action="{{url('/admin/mi_unidad')}}" method="post">
+                                            @csrf
+                                            @method('PUT')
+                                            <input type="text" value="green" name="color" hidden>
+                                            <input type="text" value="{{$carpeta->id}}" name="id" hidden>
+                                            <button type="submit" style="background-color: white;border: 0px">
+                                                <i class="bi bi-circle-fill" style="color: green"></i>
+                                            </button>
+                                        </form>
+                                        <form action="{{url('/admin/mi_unidad')}}" method="post">
+                                            @csrf
+                                            @method('PUT')
+                                            <input type="text" value="darkorange" name="color" hidden>
+                                            <input type="text" value="{{$carpeta->id}}" name="id" hidden>
+                                            <button type="submit" style="background-color: white;border: 0px">
+                                                <i class="bi bi-circle-fill" style="color: darkorange"></i>
+                                            </button>
+                                        </form>
+                                        <form action="{{url('/admin/mi_unidad')}}" method="post">
+                                            @csrf
+                                            @method('PUT')
+                                            <input type="text" value="black" name="color" hidden>
+                                            <input type="text" value="{{$carpeta->id}}" name="id" hidden>
+                                            <button type="submit" style="background-color: white;border: 0px">
+                                                <i class="bi bi-circle-fill" style="color: black"></i>
+                                            </button>
+                                        </form>
+                                    </div>
                                     </a>
                                     <a class="dropdown-item" href="#"><i class="bi bi-trash"></i> Eliminar</a>
                                 </div>
