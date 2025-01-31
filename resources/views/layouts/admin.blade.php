@@ -178,7 +178,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         @if( ($message = Session::get('mensaje')) && ($icono = Session::get('icono')) )
             <script>
                 Swal.fire({
-                    position: "center",
+                    position: "top-end",
                     icon: "{{$icono}}",
                     title: "{{$message}}",
                     showConfirmButton: false,

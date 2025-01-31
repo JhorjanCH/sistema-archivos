@@ -384,16 +384,84 @@
                 </td>
                 <td>{{$archivo->created_at}}</td>
                 <td>
-                    <form action="{{url('/admin/mi_unidad/carpeta')}}" method="post" style="text-align: center">
-                        @csrf
-                        @method('DELETE')
-                        <input type="text" value="{{$archivo->id}}" name="id" hidden>
-                        <button type="submit" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></button>
-                    </form>
+                    
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    
+                <!-- Boton eliminar archivos -->
+                <form action="{{url('/admin/mi_unidad/carpeta')}}" method="post" 
+                    style="text-align: center" method="post" onclick="preguntar{{$archivo->id}} (event)" id="miFormulario{{$archivo->id}}">
+                    @csrf
+                    @method('DELETE')
+                    <input type="text" value="{{$archivo->id}}" name="id" hidden>
+                    <button type="submit" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></button>
+                </form>
+                <script>
+                    function preguntar{{$archivo->id}}(event) {
+                        event.preventDefault();
+                        Swal.fire({
+                        title: 'Eliminar archivo',
+                        text: '¿Desea eliminar este archivo?',
+                        icon: 'question',
+                        showDenyButton: true,
+                        confirmButtonText: 'Eliminar',
+                        confirmButtonColor: '#a5161d',
+                        denyButtonColor: '#270a0a',
+                        denyButtonText: 'Cancelar',
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                var form = $('#miFormulario{{$archivo->id}}');
+                                form.submit();
+                                }
+                            });
+                        }
+                </script>
+
+                <!-- Boton compartir archivos -->
+                <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#modal_compartir_{{$archivo->id}}">
+                    <i class="bi bi-share-fill"></i></button>
+
+                <!-- Modal -->
+                    <div class="modal fade" id="modal_compartir_{{$archivo->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Compartir archivo</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>{{$archivo->nombre}}</p>
+                            <?php
+                            if ( ($archivo->estado_archivo)=="PRIVADO" ) { ?>
+                                
+                            <form action="{{route('mi_unidad.archivo.privado.publico')}}" method="get">
+                                @csrf
+                                <input type="text" name="id" value="{{$archivo->id}}" hidden>
+                                <b>Este archivo esta de forma privada</b>
+                                <button type="submit" class="btn btn-success"><i class="bi bi-unlock-fill"></i>
+                                Cambiar a público</button>
+                            </form>
+                            <?php
+                            }else { ?>
+                                <b>Este archivo esta de forma pública</b>
+                                <button class="btn btn-info"><i class="bi bi-lock-fill"></i> Cambiar a privada</button>
+                                <hr>
+                                <button type="button" class="btn btn-outline-primary">Copiar enlace</button>
+                            <?php
+                            }
+                            ?>
+                        </div>
+                        </div>
+                    </div>
+                    </div>              
+                </div>
                 </td> 
             </tr>
         @endforeach  
         </tbody>
-    </table>  
+    </table>
+    
+    
 
 @endsection
