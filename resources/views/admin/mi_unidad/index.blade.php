@@ -29,6 +29,7 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
+                                            <input type="text" name="user_id" value="{{Auth::user()->id}}" hidden>
                                             <input type="text" class="form-control" name="nombre" required>
                                         </div>
                                     </div>
@@ -67,11 +68,11 @@
                                     <i class="bi bi-three-dots-vertical"></i>
                                 </button>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#Modal_cambiar_nombre{{$carpeta->id}}"><i class="bi bi-pencil"></i> Cambiar nombre
+                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#modal_cambiar_nombre{{$carpeta->id}}"><i class="bi bi-pencil"></i> Cambiar nombre
                                     </a>
                                     <a class="dropdown-item" href="#"><i class="bi bi-front"></i> Color de la carpeta
                                     <div class="btn-group" role="group" aria-label="Basic example">
-                                    <form action="{{url('/admin/mi_unidad')}}" method="post">
+                                    <form action="{{url('/admin/mi_unidad/color')}}" method="post">
                                             @csrf
                                             @method('PUT')
                                             <input type="text" value="blue" name="color" hidden>
@@ -80,7 +81,7 @@
                                                 <i class="bi bi-circle-fill" style="color: blue"></i>
                                             </button>
                                         </form>
-                                        <form action="{{url('/admin/mi_unidad')}}" method="post">
+                                        <form action="{{url('/admin/mi_unidad/color')}}" method="post">
                                             @csrf
                                             @method('PUT')
                                             <input type="text" value="red" name="color" hidden>
@@ -89,7 +90,7 @@
                                                 <i class="bi bi-circle-fill" style="color: red"></i>
                                             </button>
                                         </form>
-                                        <form action="{{url('/admin/mi_unidad')}}" method="post">
+                                        <form action="{{url('/admin/mi_unidad/color')}}" method="post">
                                             @csrf
                                             @method('PUT')
                                             <input type="text" value="green" name="color" hidden>
@@ -98,7 +99,7 @@
                                                 <i class="bi bi-circle-fill" style="color: green"></i>
                                             </button>
                                         </form>
-                                        <form action="{{url('/admin/mi_unidad')}}" method="post">
+                                        <form action="{{url('/admin/mi_unidad/color')}}" method="post">
                                             @csrf
                                             @method('PUT')
                                             <input type="text" value="darkorange" name="color" hidden>
@@ -107,7 +108,7 @@
                                                 <i class="bi bi-circle-fill" style="color: darkorange"></i>
                                             </button>
                                         </form>
-                                        <form action="{{url('/admin/mi_unidad')}}" method="post">
+                                        <form action="{{url('/admin/mi_unidad/color')}}" method="post">
                                             @csrf
                                             @method('PUT')
                                             <input type="text" value="black" name="color" hidden>
@@ -127,7 +128,7 @@
             </div>
 
             <!-- Modal cambiar nombre carpetas-->
-            <div class="modal fade" id="Modal_cambiar_nombre{{$carpeta->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal fade" id="modal_cambiar_nombre{{$carpeta->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header">

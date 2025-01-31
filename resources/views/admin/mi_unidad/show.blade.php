@@ -71,6 +71,7 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <input type="text" value="{{$carpeta->id}}" name="carpeta_padre_id" hidden>
+                                            <input type="text" value="{{Auth::user()->id}}" name="user_id" hidden>
                                             <input type="text" class="form-control" name="nombre" required>
                                         </div>
                                     </div>
@@ -113,7 +114,7 @@
                                     </a>
                                     <a class="dropdown-item" href="#"><i class="bi bi-front"></i> Color de la carpeta
                                     <div class="btn-group" role="group" aria-label="Basic example">
-                                    <form action="{{url('/admin/mi_unidad/carpeta')}}" method="post">
+                                    <form action="{{url('/admin/mi_unidad/color')}}" method="post">
                                             @csrf
                                             @method('PUT')
                                             <input type="text" value="blue" name="color" hidden>
@@ -122,7 +123,7 @@
                                                 <i class="bi bi-circle-fill" style="color: blue"></i>
                                             </button>
                                         </form>
-                                        <form action="{{url('/admin/mi_unidad/carpeta')}}" method="post">
+                                        <form action="{{url('/admin/mi_unidad/color')}}" method="post">
                                             @csrf
                                             @method('PUT')
                                             <input type="text" value="red" name="color" hidden>
@@ -131,7 +132,7 @@
                                                 <i class="bi bi-circle-fill" style="color: red"></i>
                                             </button>
                                         </form>
-                                        <form action="{{url('/admin/mi_unidad/carpeta')}}" method="post">
+                                        <form action="{{url('/admin/mi_unidad/color')}}" method="post">
                                             @csrf
                                             @method('PUT')
                                             <input type="text" value="green" name="color" hidden>
@@ -140,7 +141,7 @@
                                                 <i class="bi bi-circle-fill" style="color: green"></i>
                                             </button>
                                         </form>
-                                        <form action="{{url('/admin/mi_unidad/carpeta')}}" method="post">
+                                        <form action="{{url('/admin/mi_unidad/color')}}" method="post">
                                             @csrf
                                             @method('PUT')
                                             <input type="text" value="darkorange" name="color" hidden>
@@ -149,7 +150,7 @@
                                                 <i class="bi bi-circle-fill" style="color: darkorange"></i>
                                             </button>
                                         </form>
-                                        <form action="{{url('/admin/mi_unidad/carpeta')}}" method="post">
+                                        <form action="{{url('/admin/mi_unidad/color')}}" method="post">
                                             @csrf
                                             @method('PUT')
                                             <input type="text" value="black" name="color" hidden>
@@ -202,8 +203,197 @@
 
     <hr>
 
-    @foreach($archivos as $archivo)
-        <li>{{$archivo->nombre}}</li>
-    @endforeach    
+    <table class="table table-responsive table-hover table-striped">
+        <thead>
+            <tr>
+                <th><center>Nro</center></th>
+                <th><center>Nombre</center></th>
+                <th><center>Fecha</center></th>
+                <th><center>Accione</center></th>
+            </tr>
+        </thead>
+        <tbody>
+        @php
+        $contador = 0;
+        @endphp
+        @foreach($archivos as $archivo)
+            <tr>
+                <td style="text-align: center">{{$contador=$contador+1;}}</td>
+                <td>
+                    <?php
+                    $nombre = $archivo->nombre;
+                    $extension = pathinfo($nombre,PATHINFO_EXTENSION);
+                    if ($extension == "jpg"){ ?>
+                        <img src="{{url('/imagenes//iconos/icono_de_jpg.png')}}" alt="" width="25px">
+                    <?php
+                    }
+                    if ($extension == "docx") { ?><img src="{{url('/imagenes//iconos/icono_de_word.png')}}" alt="" width="25px"><?php }  
+                    if ($extension == "pdf") { ?><img src="{{url('/imagenes//iconos/icono_de_pdf.png')}}" alt="" width="20px"><?php } 
+                    if ($extension == "xlsx") { ?><img src="{{url('/imagenes//iconos/icono_de_xlsx.png')}}" alt="" width="25px"><?php }
+                    if ($extension == "pptx") { ?><img src="{{url('/imagenes//iconos/icono_de_pptx.png')}}" alt="" width="25px"><?php }
+                    if ($extension == "mp4") { ?><img src="{{url('/imagenes//iconos/icono_de_video.png')}}" alt="" width="25px"><?php }
+                    if ($extension == "mp3") { ?><img src="{{url('/imagenes//iconos/icono_de_mp3.png')}}" alt="" width="25px"><?php }
+                    
+                    ?>       
+                    <a href="" data-toggle="modal" data-target="#modal_visor{{$archivo->id}}" style="color: black">
+                        {{$archivo->nombre}}
+                    </a>
+
+                    
+                    <?php if ($extension == "jpg") { ?>
+                    <!-- Modal -->
+                    <div class="modal fade" id="modal_visor{{$archivo->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">{{$archivo->nombre}}</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body" style="text-align: center">
+                                    <img src="{{asset('storage/'.$carpeta->id.'/'.$archivo->nombre)}}" width="100%" alt="" >
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+                    <?php } ?>
+
+                    <?php if ($extension == "pdf") { ?>
+                    <!-- Modal -->
+                    <div class="modal fade" id="modal_visor{{$archivo->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog modal-xl">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">{{$archivo->nombre}}</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body" style="text-align: center">
+                                    <iframe src="{{asset('storage/'.$carpeta->id.'/'.$archivo->nombre)}}" width="100%" height="550px" alt="" ></iframe>
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+                    <?php } ?>
+
+                    <?php if ($extension == "docx") { ?>
+                    <!-- Modal -->
+                    <div class="modal fade" id="modal_visor{{$archivo->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">{{$archivo->nombre}}</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body" style="text-align: center">
+                                    <img src="{{url('imagenes/iconos/icono_de_word.png')}}" width="50%" alt="" ><br>
+                                    <a href="{{asset('storage/'.$carpeta->id.'/'.$archivo->nombre)}}" class="btn btn-success">Descargar</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+                    <?php } ?>
+
+                    <?php if ($extension == "pptx") { ?>
+                    <!-- Modal -->
+                    <div class="modal fade" id="modal_visor{{$archivo->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">{{$archivo->nombre}}</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body" style="text-align: center">
+                                    <img src="{{url('imagenes/iconos/icono_de_pptx.png')}}" width="50%" alt="" ><br><br>
+                                    <a href="{{asset('storage/'.$carpeta->id.'/'.$archivo->nombre)}}" class="btn btn-success">Descargar</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+                    <?php } ?>
+
+                    <?php if ($extension == "xlsx") { ?>
+                    <!-- Modal -->
+                    <div class="modal fade" id="modal_visor{{$archivo->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">{{$archivo->nombre}}</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body" style="text-align: center">
+                                    <img src="{{url('imagenes/iconos/icono_de_xlsx.png')}}" width="50%" alt="" ><br>
+                                    <a href="{{asset('storage/'.$carpeta->id.'/'.$archivo->nombre)}}" class="btn btn-success">Descargar</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+                    <?php } ?>
+
+                    <?php if ($extension == "mp4") { ?>
+                    <!-- Modal -->
+                    <div class="modal fade" id="modal_visor{{$archivo->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog modal-xl">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">{{$archivo->nombre}}</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body" style="text-align: center">
+                                    <video id="my-video" style="width: 100%;" height="500px" class="video-js" controls preload="auto" data-setup="{}">
+                                        <source src="{{asset('storage/'.$carpeta->id.'/'.$archivo->nombre)}}" type="video/mp4">
+                                    </video>
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+                    <?php } ?>
+
+                    <?php if ($extension == "mp3") { ?>
+                    <!-- Modal -->
+                    <div class="modal fade" id="modal_visor{{$archivo->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">{{$archivo->nombre}}</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body" style="text-align: center">
+                                    <audio id="my-audio" style="width: 100%;" controls>
+                                        <source src="{{asset('storage/'.$carpeta->id.'/'.$archivo->nombre)}}" type="audio/mp3">
+                                    </audio>
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+                    <?php } ?>
+
+                    
+                </td>
+                <td>{{$archivo->created_at}}</td>
+                <td>
+                    <form action="{{url('/admin/mi_unidad/carpeta')}}" method="post" style="text-align: center">
+                        @csrf
+                        @method('DELETE')
+                        <input type="text" value="{{$archivo->id}}" name="id" hidden>
+                        <button type="submit" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></button>
+                    </form>
+                </td> 
+            </tr>
+        @endforeach  
+        </tbody>
+    </table>  
 
 @endsection

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Carpeta;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CarpetaController extends Controller
 {
@@ -12,7 +13,10 @@ class CarpetaController extends Controller
      */
     public function index()
     {   
-        $carpetas = Carpeta::whereNull('carpeta_padre_id')->get();
+        $id_user = Auth::user()->id;
+        $carpetas = Carpeta::whereNull('carpeta_padre_id')
+                            ->where('user_id',$id_user)
+                            ->get();
         return view('admin.mi_unidad.index',['carpetas'=>$carpetas]);
     }
 
@@ -36,10 +40,11 @@ class CarpetaController extends Controller
 
             $carpeta = new Carpeta();
             $carpeta->nombre = $request->nombre;
+            $carpeta->user_id = $request->user_id;
             $carpeta->save();
 
             return redirect()->route('mi_unidad.index')
-                ->with('mensaje','Se registro la carpeta de la manera correcta')
+                ->with('mensaje','Se ha creado la carpeta de la manera correcta')
                 ->with('icono','success');
     }
 
@@ -109,11 +114,12 @@ class CarpetaController extends Controller
 
         $carpeta = new Carpeta();
         $carpeta->nombre = $request->nombre;
+        $carpeta->user_id = $request->user_id;
         $carpeta->carpeta_padre_id = $request->carpeta_padre_id;
         $carpeta->save();
 
         return redirect()->back()
-            ->with('mensaje','Se registro la carpeta de la manera correcta')
+            ->with('mensaje','Se ha creado la carpeta de la manera correcta')
             ->with('icono','success');
 
     }

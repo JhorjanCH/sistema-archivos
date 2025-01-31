@@ -16,13 +16,20 @@ return new class extends Migration
             $table->string('nombre');
             $table->string('color',50)->nullable();
             $table->unsignedBigInteger('carpeta_padre_id')->nullable();
+            $table->unsignedBigInteger('user_id');
             $table->timestamps();
 
             $table->foreign('carpeta_padre_id')
-            ->references('id')
-            ->on('carpetas')
-            ->onUpdate('cascade')
-            ->onDelete('cascade');
+                ->references('id')
+                ->on('carpetas')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
         });
     }
 

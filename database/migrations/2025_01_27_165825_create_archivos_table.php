@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('archivos', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
+            $table->string('estado_archivo');
             $table->unsignedBigInteger('carpeta_id');
             $table->timestamps();
 

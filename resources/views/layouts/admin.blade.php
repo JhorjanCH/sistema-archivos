@@ -21,7 +21,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
     <!-- Sweetalert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
+    <!-- Video.js CSS -->
+    <link href="https://vjs.zencdn.net/8.16.1/video-js.css" rel="stylesheet" />
     <style>
         .dropdown-toggle{
             background: white;

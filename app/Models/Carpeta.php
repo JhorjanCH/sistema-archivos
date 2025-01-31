@@ -17,4 +17,8 @@ class Carpeta extends Model
     public function archivos() {
         return $this->hasMany(Archivo::class);
     }
+
+    public function user() {
+        return $this->belongsTo(User::class);
+    }
 }
