@@ -101,7 +101,7 @@ class CarpetaController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        Carpeta::destroy($id);
     }
 
     public function crear_subcarpeta(Request $request) {

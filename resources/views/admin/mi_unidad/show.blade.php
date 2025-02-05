@@ -26,7 +26,7 @@
                                 <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <form action="{{url('/admin/mi_unidad/carpeta')}}" method="post" class="dropzone" id="myDropzone" enctype="multipart/form-data ">
+                            <form action="{{url('/admin/mi_unidad/carpeta/upload')}}" method="post" class="dropzone" id="myDropzone" enctype="multipart/form-data ">
                                     @csrf
                             <div class="modal-body">
                                     <input type="text" value="{{$carpeta->id}}" name="id" hidden>
@@ -161,7 +161,12 @@
                                         </form>
                                     </div>
                                     </a>
-                                    <a class="dropdown-item" href="#"><i class="bi bi-trash"></i> Eliminar</a>
+                                    <form action="{{url('/admin/mi_unidad/eliminar_carpeta',$carpeta->id)}}" method="post">
+                                        @csrf
+                                        @method('DELETE')
+                                        <input type="text" name="id" value="{{$carpeta->id}}" hidden>
+                                        <button type="submit" class="dropdown-item" href="#"><i class="bi bi-trash"></i> Eliminar</button>
+                                    </form>
                                 </div>
                                 </div>
                             </div>
@@ -435,7 +440,7 @@
                             <?php
                             if ( ($archivo->estado_archivo)=="PRIVADO" ) { ?>
                                 
-                            <form action="{{route('mi_unidad.archivo.privado.publico')}}" method="get">
+                            <form action="{{route('mi_unidad.archivo.privado.publico')}}" method="post">
                                 @csrf
                                 <input type="text" name="id" value="{{$archivo->id}}" hidden>
                                 <b>Este archivo esta de forma privada</b>
@@ -444,10 +449,33 @@
                             </form>
                             <?php
                             }else { ?>
-                                <b>Este archivo esta de forma pública</b>
-                                <button class="btn btn-info"><i class="bi bi-lock-fill"></i> Cambiar a privada</button>
+                                <form action="{{route('mi_unidad.archivo.publico.privado')}}" method="post">
+                                    @csrf
+                                    <input type="text" name="id" value="{{$archivo->id}}" hidden>
+                                    <b>Este archivo esta de forma pública</b>
+                                    <button type="submit" class="btn btn-info"><i class="bi bi-lock-fill"></i> Cambiar a privada</button>
+                                </form>
                                 <hr>
-                                <button type="button" class="btn btn-outline-primary">Copiar enlace</button>
+                                <button data-clipboard-target="#foo{{$archivo->id}}" type="button" class="btn btn-outline-primary">Copiar enlace</button>
+                                <input type="text" id="foo{{$archivo->id}}" value="{{asset('storage/'.$carpeta->id.'/'.$archivo->nombre)}}" class="form-control">
+                                <script>var clipboard = new Clipboard('.btn');</script>
+                                <br>
+                                <center>
+                                <div id="qrcode{{$archivo->id}}"></div>
+                                </center>
+                                
+                                <script>
+                                    var opciones = {
+                                        width: 150,
+                                        height: 150
+                                    };
+                                    var texto = encodeURIComponent("{{ asset('storage/'.$carpeta->id.'/'.$archivo->nombre) }}");
+
+                                    var qrcode = new QRCode("qrcode{{$archivo->id}}", opciones);
+                                    qrcode.makeCode(texto);
+                                </script>
+
+
                             <?php
                             }
                             ?>
@@ -460,8 +488,6 @@
             </tr>
         @endforeach  
         </tbody>
-    </table>
-    
-    
+    </table> 
 
 @endsection

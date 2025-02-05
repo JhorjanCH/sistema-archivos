@@ -32,15 +32,24 @@ class ArchivoController extends Controller
         $estado_archivo = $archivo->estado_archivo;
         if ($estado_archivo=="PRIVADO"){
             Storage::delete($archivo->carpeta_id.'/'.$archivo->nombre);
+
+            Archivo::destroy($id);
+
+        return redirect()->back()
+           ->with('mensaje', 'Se elimino archivo de la manera correcta')
+           ->with('icono','success');
         }else {
-            Storage::delete('/public'.$archivo->carpeta_id.'/'.$archivo->nombre);
-        }
-        
-        Archivo::destroy($id);
+            Storage::delete('public/'.$archivo->carpeta_id.'/'.$archivo->nombre);
+            echo "'/public'.$archivo->carpeta_id.'/'.$archivo->nombre'";
+            echo "'$archivo->carpeta_id.'/'.$archivo->nombre'";
+            Archivo::destroy($id);
 
         return redirect()->back()
             ->with('mensaje', 'Se elimino archivo de la manera correcta')
             ->with('icono','success');
+            
+        }
+        
    }
    public function privado_a_publico(Request $request) {
         $id = $request->id;
@@ -57,6 +66,26 @@ class ArchivoController extends Controller
         $ruta_archivo_publico = 'public/'.$carpeta_id.'/'.$nombre;
 
         Storage::move($ruta_archivo_privado, $ruta_archivo_publico);
+
+        return redirect()->back()
+            ->with('mensaje', 'Se cambio el estado del archivo de la manera correcta')
+            ->with('icono','success');
+   }
+   public function publico_a_privado(Request $request) {
+        $id = $request->id;
+        $estado_archivo = "PRIVADO";
+
+        $archivo = Archivo::find($id);
+        $carpeta_id = $archivo->carpeta_id;
+        $nombre = $archivo->nombre;
+
+        $archivo->estado_archivo = $estado_archivo;
+        $archivo->save();
+
+        $ruta_archivo_privado = $carpeta_id.'/'.$nombre;
+        $ruta_archivo_publico = 'public/'.$carpeta_id.'/'.$nombre;
+
+        Storage::move($ruta_archivo_publico, $ruta_archivo_privado);
 
         return redirect()->back()
             ->with('mensaje', 'Se cambio el estado del archivo de la manera correcta')

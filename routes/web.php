@@ -45,17 +45,21 @@ Route::get('/admin/mi_unidad/carpeta', [App\Http\Controllers\CarpetaController::
 Route::put('/admin/mi_unidad', [App\Http\Controllers\CarpetaController::class, 'update'])->name('mi_unidad.update')->middleware('auth');
 Route::put('/admin/mi_unidad/color', [App\Http\Controllers\CarpetaController::class, 'update_color'])->name('mi_unidad.update_color')->middleware('auth');
 
+//ruta eliminar carpetas
+Route::delete('/admin/mi_unidad/eliminar_carpeta/{id}', [App\Http\Controllers\CarpetaController::class, 'destroy'])->name('carpeta.destroy')->middleware('auth');
 
 //Rutas para los archivos
 
-Route::post('/admin/mi_unidad/carpeta', [App\Http\Controllers\ArchivoController::class, 'upload'])->name('mi_unidad.archivo.upload')->middleware('auth');
+Route::post('/admin/mi_unidad/carpeta/upload', [App\Http\Controllers\ArchivoController::class, 'upload'])->name('mi_unidad.archivo.upload')->middleware('auth');
 
 //Ruta para eliminar archivos
 Route::delete('/admin/mi_unidad/carpeta', [App\Http\Controllers\ArchivoController::class, 'eliminar_archivo'])->name('mi_unidad.archivo.eliminar_archivo')->middleware('auth');
 
 //ruta para cambiar archivos de privada  a pública
-Route::get('/admin/mi_unidad/carpeta', [App\Http\Controllers\ArchivoController::class, 'privado_a_publico'])->name('mi_unidad.archivo.privado.publico')->middleware('auth');
+Route::post('/admin/mi_unidad/carpeta/privado', [App\Http\Controllers\ArchivoController::class, 'privado_a_publico'])->name('mi_unidad.archivo.privado.publico')->middleware('auth');
 
+//ruta para cambiar archivos de pública  a privada
+Route::post('/admin/mi_unidad/carpeta/publico', [App\Http\Controllers\ArchivoController::class, 'publico_a_privado'])->name('mi_unidad.archivo.publico.privado')->middleware('auth');
 
 //Ruta para mostrar archivos privados
 Route::get('storage/{carpeta}/{archivo}',function ($carpeta,$archivo){

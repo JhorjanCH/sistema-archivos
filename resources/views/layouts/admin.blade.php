@@ -23,6 +23,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- Video.js CSS -->
     <link href="https://vjs.zencdn.net/8.16.1/video-js.css" rel="stylesheet" />
+    <!-- Clicpboar.js -->
+    <script src="https://cdn.rawgit.com/zenorocha/clipboard.js/v1.5.3/dist/clipboard.min.js"></script>
+    <!-- QRCode -->
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <style>
         .dropdown-toggle{
             background: white;
