@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Carpeta;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 
 class CarpetaController extends Controller
@@ -99,9 +100,16 @@ class CarpetaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
         Carpeta::destroy($id);
+
+        Storage::deleteDirectory($id);
+        Storage::deleteDirectory('public/'.$id);
+
+        return redirect()->back()
+            ->with('mensaje','Se ha eliminado la carpeta de la manera correcta')
+            ->with('icono','success');
     }
 
     public function crear_subcarpeta(Request $request) {

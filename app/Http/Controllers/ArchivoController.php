@@ -40,8 +40,6 @@ class ArchivoController extends Controller
            ->with('icono','success');
         }else {
             Storage::delete('public/'.$archivo->carpeta_id.'/'.$archivo->nombre);
-            echo "'/public'.$archivo->carpeta_id.'/'.$archivo->nombre'";
-            echo "'$archivo->carpeta_id.'/'.$archivo->nombre'";
             Archivo::destroy($id);
 
         return redirect()->back()

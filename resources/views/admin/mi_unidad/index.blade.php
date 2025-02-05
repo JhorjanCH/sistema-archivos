@@ -119,7 +119,33 @@
                                         </form>
                                     </div>
                                     </a>
-                                    <a class="dropdown-item" href="#"><i class="bi bi-trash"></i> Eliminar</a>
+                                    <form action="{{url('/admin/mi_unidad/eliminar_carpeta',$carpeta->id)}}" 
+                                        onclick="preguntar_c{{$carpeta->id}}(event)" method="post" id="miFormularioB{{$carpeta->id}}">
+                                        @csrf
+                                        @method('DELETE')
+                                        <input type="text" name="id" value="{{$carpeta->id}}" hidden>
+                                        <button type="submit" class="dropdown-item" href="#"><i class="bi bi-trash"></i> Eliminar</button>
+                                    </form>
+                                    <script>
+                                            function preguntar_c{{$carpeta->id}}(event) {
+                                                event.preventDefault();
+                                                Swal.fire({
+                                                    title: '¿Desea eliminar esta carpeta?',
+                                                    text: 'Al eliminar la carpeta se borrar todo el contenido dentro de ella',
+                                                    icon: 'question',
+                                                    showDenyButton: true,
+                                                    confirmButtonText: 'Eliminar',
+                                                    confirmButtonColor: '#a5161d',
+                                                    denyButtonColor: '#270a0a',
+                                                    denyButtonText: 'Cancelar',
+                                                }).then((result) => {
+                                                    if (result.isConfirmed) {
+                                                        var form = $('#miFormularioB{{$carpeta->id}}');
+                                                        form.submit();
+                                                    }
+                                                });
+                                            }
+                                        </script>
                                 </div>
                             </div>
                         </div>

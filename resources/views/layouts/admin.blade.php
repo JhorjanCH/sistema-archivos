@@ -113,6 +113,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                          with font-awesome or any other icon font library -->
 
 
+                    @can('usuarios.index')
 
                     <li class="nav-item">
                         <a href="#" class="nav-link active">
@@ -131,6 +132,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             </li>
                         </ul>
                     </li>
+
+                    @endcan
 
                     <li class="nav-item">
                         <a href="{{url('/admin/mi_unidad')}}" class="nav-link active">

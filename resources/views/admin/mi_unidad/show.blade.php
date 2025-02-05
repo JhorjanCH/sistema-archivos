@@ -161,12 +161,7 @@
                                         </form>
                                     </div>
                                     </a>
-                                    <form action="{{url('/admin/mi_unidad/eliminar_carpeta',$carpeta->id)}}" method="post">
-                                        @csrf
-                                        @method('DELETE')
-                                        <input type="text" name="id" value="{{$carpeta->id}}" hidden>
-                                        <button type="submit" class="dropdown-item" href="#"><i class="bi bi-trash"></i> Eliminar</button>
-                                    </form>
+                                    <button type="submit" class="dropdown-item" href="#"><i class="bi bi-trash"></i> Eliminar</button>
                                 </div>
                                 </div>
                             </div>

@@ -47,6 +47,8 @@ class UsuarioController extends Controller
         $usuario->password = Hash::make($request['password']);
         $usuario->save();
 
+        $usuario->assignRole('usuario');
+
         return redirect()->route('usuarios.index')
             ->with('mensaje','Se registro al usuario de la manera correcta')
             ->with('icono','success');
@@ -129,7 +131,7 @@ class UsuarioController extends Controller
 
         Auth::login($usuario);
 
-        return redirect('/')
+        return redirect()->route('mi_unidad.index')
             ->with('mensaje','BIENVENIDOS AL SISTEMA')
             ->with('icono','success');
 

@@ -20,11 +20,12 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+        $this->call([RoleSeeder::class]);
+
         User::create([
             'name'=>'admin',
             'email'=>'admin@admin.com',
             'password'=>Hash::make('12345678'),
-        ]);
-
+        ])->assignRole('admin');;
     }
 }
