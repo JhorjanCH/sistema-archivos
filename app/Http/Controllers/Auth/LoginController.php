@@ -21,9 +21,13 @@ class LoginController extends Controller
     {
         // Asumiendo que la columna 'name' en tu base de datos contiene el rol
         if ($user->name === 'admin') {
-            return redirect('/');
+            return redirect('/')
+            ->with('mensaje','BIENVENIDOS AL SISTEMA')
+            ->with('icono','success');
         } else {
-            return redirect('/admin/mi_unidad');
+            return redirect('/admin/mi_unidad')
+            ->with('mensaje','BIENVENIDOS AL SISTEMA')
+            ->with('icono','success');
         }
     }
 }
