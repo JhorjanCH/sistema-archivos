@@ -65,7 +65,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
         </li>
         <li class="nav-item d-none d-sm-inline-block">
-          <a href="{{url('/')}}" class="nav-link">Sistema gestión de archivos</a>
+          <a class="nav-link">Sistema gestión de archivos</a>
         </li>
       </ul>
 
@@ -94,7 +94,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
       <!-- Brand Logo -->
-      <a href="{{url('/')}}" class="brand-link">
+      <a class="brand-link">
         <img src="{{asset('dist/img/AdminLTELogo.png')}}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
           style="opacity: .8">
         <span class="brand-text font-weight-light">BIENVENIDO</span>
@@ -105,10 +105,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
           <div class="image">
-            <img src="{{asset('dist/img/user2-160x160.jpg')}}" class="img-circle elevation-2" alt="User Image">
+            <img src="{{asset('dist/img/user2-160x160.png')}}" class="img-circle elevation-2" alt="User Image">
           </div>
           <div class="info">
-            <a href="#" class="d-block">{{Auth::user()->name}}</a>
+            <a class="d-block">{{Auth::user()->name}}</a>
           </div>
         </div>
 
@@ -121,6 +121,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 
             @can('usuarios.index')
+
+            <li class="nav-item">
+              <a href="{{url('/')}}" class="nav-link active">
+                <i class="nav-icon fas"><i class="bi bi-window"></i></i>
+                <p>
+                  Panel principal
+                </p>
+              </a>
 
             <li class="nav-item">
               <a href="#" class="nav-link active">

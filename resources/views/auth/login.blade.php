@@ -83,7 +83,7 @@
                 <div class="row mb-0">
                   <div class="col-md-12">
                     <button type="submit" class="btn btn-primary btn-block">
-                      {{ __('Login') }}
+                      {{ __('Iniciar sesión') }}
                     </button>
                   </div>
                 </div>
