@@ -24,9 +24,15 @@
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" id="exampleModalLabel">Subir archivos</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                a<span aria-hidden="true">&times;</span>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="recargarPagina()">
+                <span aria-hidden="true">&times;</span>
               </button>
+              
+              <script>
+                function recargarPagina() {
+                  location.reload();
+                }
+              </script>
             </div>
             <form action="{{url('/admin/mi_unidad/carpeta/upload')}}" method="post" class="dropzone" id="myDropzone"
               enctype="multipart/form-data ">
@@ -237,7 +243,7 @@
 
 <hr>
 
-<table class="table table-responsive table-hover table-striped">
+<table id="tablaArchivos" class="table table-responsive table-hover table-striped">
   <thead>
     <tr>
       <th>
@@ -255,6 +261,7 @@
     </tr>
   </thead>
   <tbody>
+    <input type="text" class="form-control w-50" id="buscador" onkeyup="buscarArchivos()" placeholder="Buscar archivos..."> <br>  
     @php
     $contador = 0;
     @endphp
@@ -548,5 +555,27 @@
     @endforeach
   </tbody>
 </table>
+
+<script>
+  function buscarArchivos() {
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("buscador");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("tablaArchivos");
+    tr = table.getElementsByTagName("tr");
+
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[1]; // Columna donde se encuentra el nombre del archivo
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }
+    }
+  }
+</script>
 
 @endsection

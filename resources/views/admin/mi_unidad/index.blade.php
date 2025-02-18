@@ -127,7 +127,7 @@
                 @method('DELETE')
                 <input type="text" name="id" value="{{$carpeta->id}}" hidden>
                 <button type="submit" class="dropdown-item" href="#"><i class="bi bi-trash"></i>
-                  Eliminar Pricipal</button>
+                  Eliminar</button>
               </form>
               <script>
                 function preguntar_c{{$carpeta->id}}(event) {
