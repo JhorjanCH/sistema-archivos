@@ -48,6 +48,9 @@ Route::put('/admin/mi_unidad/color', [App\Http\Controllers\CarpetaController::cl
 //ruta eliminar carpetas
 Route::delete('/admin/mi_unidad/eliminar_carpeta/{id}', [App\Http\Controllers\CarpetaController::class, 'destroy'])->name('carpeta.destroy')->middleware('auth');
 
+//ruta eliminar subcarpetas
+Route::delete('/admin/mi_unidad/eliminar_subcarpeta/{id}', [App\Http\Controllers\CarpetaController::class, 'destroy_subcarpeta'])->name('carpeta.destroy.sub_carpeta')->middleware('auth');
+
 //Rutas para los archivos
 
 Route::post('/admin/mi_unidad/carpeta/upload', [App\Http\Controllers\ArchivoController::class, 'upload'])->name('mi_unidad.archivo.upload')->middleware('auth');

@@ -156,4 +156,16 @@ class CarpetaController extends Controller
 
         return redirect()->back();
     }
+
+    public function destroy_subcarpeta($id)
+    {
+        Carpeta::destroy($id);
+
+        Storage::deleteDirectory($id);
+        Storage::deleteDirectory('public/'.$id);
+
+        return redirect()->back()
+            ->with('mensaje','Se ha eliminado la subcarpeta de la manera correcta')
+            ->with('icono','success');
+    }
 }

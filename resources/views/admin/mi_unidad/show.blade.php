@@ -25,7 +25,7 @@
             <div class="modal-header">
               <h5 class="modal-title" id="exampleModalLabel">Subir archivos</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
+                a<span aria-hidden="true">&times;</span>
               </button>
             </div>
             <form action="{{url('/admin/mi_unidad/carpeta/upload')}}" method="post" class="dropzone" id="myDropzone"
@@ -166,8 +166,34 @@
                   </form>
                 </div>
               </a>
-              <button type="submit" class="dropdown-item" href="#"><i class="bi bi-trash"></i>
-                Eliminar</button>
+              <form action="{{url('/admin/mi_unidad/eliminar_subcarpeta', $subcarpeta->id)}}"
+                onclick="preguntar_d{{$subcarpeta->id}}(event)" id="miFormularioC{{$subcarpeta->id}}" method="post" >
+                @csrf
+                @method('DELETE')
+                <input type="text" name="id" value="{{$subcarpeta->id}}" hidden>
+                <button type="submit" class="dropdown-item" href="#"><i class="bi bi-trash"></i>
+                  Eliminar</button>
+              </form>
+              <script>
+                function preguntar_d{{$subcarpeta->id}}(event) {
+                  event.preventDefault();
+                  Swal.fire({
+                    title: '¿Desea eliminar esta carpeta?',
+                    text: 'Al eliminar la carpeta se borrar todo el contenido dentro de ella',
+                    icon: 'question',
+                    showDenyButton: true,
+                    confirmButtonText: 'Eliminar',
+                    confirmButtonColor: '#a5161d',
+                    denyButtonColor: '#270a0a',
+                    denyButtonText: 'Cancelar',
+                  }).then((result) => {
+                    if (result.isConfirmed) {
+                      var form = $('#miFormularioC{{$subcarpeta->id}}');
+                      form.submit();
+                    }
+                  });
+                }
+              </script>
             </div>
           </div>
         </div>
@@ -237,9 +263,9 @@
       <td style="text-align: center">{{$contador=$contador+1;}}</td>
       <td>
         <?php
-                    $nombre = $archivo->nombre;
-                    $extension = pathinfo($nombre,PATHINFO_EXTENSION);
-                    if ($extension == "jpg"){ ?>
+            $nombre = $archivo->nombre;
+            $extension = pathinfo($nombre,PATHINFO_EXTENSION);
+            if ($extension == "jpg"){ ?>
         <img src="{{url('/imagenes//iconos/icono_de_jpg.png')}}" alt="" width="25px">
         <?php
                     }
@@ -427,28 +453,24 @@
             <button type="submit" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></button>
           </form>
           <script>
-          function preguntar {
-            {
-              $archivo - > id
+            function preguntar {{$archivo->id}}(event) {
+              event.preventDefault();
+              Swal.fire({
+                title: 'Eliminar archivo',
+                text: '¿Desea eliminar este archivo?',
+                icon: 'question',
+                showDenyButton: true,
+                confirmButtonText: 'Eliminar',
+                confirmButtonColor: '#a5161d',
+                denyButtonColor: '#270a0a',
+                denyButtonText: 'Cancelar',
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  var form = $('#miFormulario{{$archivo->id}}');
+                  form.submit();
+                }
+              });
             }
-          }(event) {
-            event.preventDefault();
-            Swal.fire({
-              title: 'Eliminar archivo',
-              text: '¿Desea eliminar este archivo?',
-              icon: 'question',
-              showDenyButton: true,
-              confirmButtonText: 'Eliminar',
-              confirmButtonColor: '#a5161d',
-              denyButtonColor: '#270a0a',
-              denyButtonText: 'Cancelar',
-            }).then((result) => {
-              if (result.isConfirmed) {
-                var form = $('#miFormulario{{$archivo->id}}');
-                form.submit();
-              }
-            });
-          }
           </script>
 
           <!-- Boton compartir archivos -->
