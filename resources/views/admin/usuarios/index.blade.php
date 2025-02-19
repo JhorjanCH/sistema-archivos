@@ -23,10 +23,12 @@
               <th><center>Nro</center></th>
               <th><center>Nombre</center></th>
               <th><center>Email</center></th>
+              <th><center>Carpetas</center></th>
               <th><center>Acciones</center></th>
             </tr>
           </thead>
-          <tbody>
+
+          <tbody style="height: 50px;">
             @php $contador = 0; @endphp
             @foreach($usuarios as $usuario)
             @php
@@ -34,10 +36,27 @@
               $id = $usuario->id;
             @endphp
             <tr>
-              <td style="text-align: center">{{ $contador }}</td>
-              <td>{{ $usuario->name }}</td>
-              <td>{{ $usuario->email }}</td>
-              <td style="text-align:center">
+              <td class="text-center align-middle">{{ $contador }}</td>
+              <td class="text-center align-middle">{{ $usuario->name }}</td>
+              <td class="text-center align-middle">{{ $usuario->email }}</td>    
+              <td class="text-center align-middle">
+                @if($usuario->carpetas->isNotEmpty())
+                    <select class="form-control" name="carpetas" id="carpetas" onchange="location = this.value;">
+                        <option value="">Selecciona una carpeta</option>
+                        @foreach($usuario->carpetas as $carpeta)
+                            <option value="{{ url('/admin/mi_unidad/carpeta', $carpeta->id) }}">
+                                <a href="{{ url('/admin/mi_unidad/carpeta', $carpeta->id) }}">
+                                    {{ $carpeta->nombre }}
+                                </a>
+                            </option>
+                        @endforeach
+                    </select>
+                @else
+                    <span>No hay carpetas creadas</span>
+                @endif
+              </td>
+            
+              <td class="text-center align-middle">
                 <div class="btn-group" role="group" aria-label="Basic example">
                   <a href="{{ route('usuarios.show', $usuario->id) }}" class="btn btn-info">
                     <i class="bi bi-eye"></i>
@@ -48,7 +67,7 @@
                   <form action="{{ route('usuarios.destroy', $usuario->id) }}" method="post" id="miFormulario{{ $id }}">
                     @csrf
                     @method('DELETE')
-                    <button type="submit" class="btn btn-danger" onclick="preguntar{{ $id }}(event)">
+                    <button type="submit" class="btn btn-danger" style="border-top-left-radius: 0; border-bottom-left-radius: 0;" onclick="preguntar{{ $id }}(event)">
                       <i class="bi bi-trash"></i>
                     </button>
                   </form>

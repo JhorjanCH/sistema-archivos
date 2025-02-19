@@ -457,7 +457,7 @@
             @csrf
             @method('DELETE')
             <input type="text" value="{{$archivo->id}}" name="id" hidden>
-            <button type="submit" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></button>
+            <button type="submit" class="btn btn-danger btn-sm" style="border-top-right-radius: 0; border-bottom-right-radius: 0;" ><i class="bi bi-trash"></i></button>
           </form>
           <script>
             function preguntar {{$archivo->id}}(event) {
@@ -481,7 +481,7 @@
           </script>
 
           <!-- Boton compartir archivos -->
-          <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#modal_compartir_{{$archivo->id}}">
+          <button class="btn btn-success btn-sm" style="border-top-right-radius: 3px; border-bottom-right-radius: 3px;" data-toggle="modal" data-target="#modal_compartir_{{$archivo->id}}">
             <i class="bi bi-share-fill"></i></button>
 
           <!-- Modal -->

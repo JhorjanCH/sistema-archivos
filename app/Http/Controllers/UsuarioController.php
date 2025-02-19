@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Carpeta; 
+use App\Models\Archivo; 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -16,8 +18,17 @@ class UsuarioController extends Controller
     public function index()
     {
         $usuarios = User::all();
-        return view('admin.usuarios.index',['usuarios'=>$usuarios]);
+
+    foreach ($usuarios as $usuario) {
+        $usuario->carpetas = Carpeta::where('user_id', $usuario->id)->get();
+        foreach ($usuario->carpetas as $carpeta) {
+            $carpeta->archivos = Archivo::where('carpeta_id', $carpeta->id)->get();
+        }
     }
+
+    return view('admin.usuarios.index', ['usuarios' => $usuarios]);
+    }
+    
 
     /**
      * Show the form for creating a new resource.
