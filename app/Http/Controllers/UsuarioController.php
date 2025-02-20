@@ -17,7 +17,7 @@ class UsuarioController extends Controller
      */
     public function index()
     {
-        $usuarios = User::all();
+        $usuarios = User::where('borrado', false)->get();
 
     foreach ($usuarios as $usuario) {
         $usuario->carpetas = Carpeta::where('user_id', $usuario->id)->get();
@@ -47,18 +47,20 @@ class UsuarioController extends Controller
         //return response()->json($datos);
 
         $request->validate([
-            'name' => 'required|max:100',
+            'nombre' => 'required|max:100',
             'email' => 'required|unique:users',
             'password' => 'required|confirmed',
         ]);
 
         $usuario = new User();
-        $usuario->name = $request->name;
+        $usuario->nombre = $request->nombre;
+        $usuario->rol = "usuario";
         $usuario->email = $request->email;
         $usuario->password = Hash::make($request['password']);
+        $usuario->borrado = false;
         $usuario->save();
 
-        $usuario->assignRole('usuario');
+        //$usuario->assignRole('usuario');
 
         return redirect()->route('usuarios.index')
             ->with('mensaje','Se registro al usuario de la manera correcta')
@@ -91,14 +93,12 @@ class UsuarioController extends Controller
     {
         $request->validate([
             'name' => 'required|max:100',
-            'email' => 'required|unique:users',
-            'password' => 'required|confirmed',
+
+            
         ]);
 
         $usuario = User::find($id);
         $usuario->name = $request->name;
-        $usuario->email = $request->email;
-        $usuario->password = Hash::make($request['password']);
         $usuario->save();
 
         return redirect()->route('usuarios.index')
@@ -107,6 +107,27 @@ class UsuarioController extends Controller
 
     }
 
+
+
+
+    public function borrado_usuario($id)
+{
+    $usuario = User::find($id);
+    
+    if ($usuario) {
+        $usuario->borrado = true;
+        $usuario->save();
+
+        return redirect()->route('usuarios.index')
+            ->with('mensaje', 'Usuario eliminado')
+            ->with('icono', 'success');
+    }
+
+    return redirect()->route('usuarios.index')
+        ->with('mensaje', 'Usuario no encontrado')
+        ->with('icono', 'error');
+}
+
     /**
      * Remove the specified resource from storage.
      */
@@ -114,12 +135,14 @@ class UsuarioController extends Controller
      public function destroy($id)
      {
          $usuario = User::findOrFail($id);
-         if ($usuario->name == 'admin') {
+         if ($usuario->rol == 'admin') {
              return redirect()->route('usuarios.index')
                  ->with('mensaje', 'No se puede eliminar el Administrador')
                  ->with('icono', 'error');
          } else {
-             User::destroy($id);
+             //User::destroy($id);
+             $usuario->borrado = true;
+             $usuario->save();
              return redirect()->route('usuarios.index')
                  ->with('mensaje', 'Se eliminó al usuario de la manera correcta')
                  ->with('icono', 'success');
@@ -139,15 +162,17 @@ class UsuarioController extends Controller
         //return response()->json($datos);
 
         $request->validate([
-            'name' => 'required|max:100',
+            'nombre' => 'required|max:100',
             'email' => 'required|unique:users',
             'password' => 'required|confirmed',
         ]);
 
         $usuario = new User();
-        $usuario->name = $request->name;
+        $usuario->nombre = $request->nombre;
+        $usuario->rol = "usuario";
         $usuario->email = $request->email;
         $usuario->password = Hash::make($request['password']);
+        $usuario->borrado = false;
         $usuario->save();
 
         Auth::login($usuario);

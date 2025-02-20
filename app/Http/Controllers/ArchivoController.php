@@ -20,6 +20,7 @@ class ArchivoController extends Controller
         $archivo->carpeta_id = $request->id;
         $archivo->nombre = $fileName;
         $archivo->estado_archivo = 'PRIVADO';
+        $archivo->borrado = false;
         $archivo->save();
 
         return redirect()->back()

@@ -22,6 +22,7 @@
             <tr>
               <th><center>Nro</center></th>
               <th><center>Nombre</center></th>
+              <th><center>Rol</center></th>
               <th><center>Email</center></th>
               <th><center>Carpetas</center></th>
               <th><center>Acciones</center></th>
@@ -37,7 +38,8 @@
             @endphp
             <tr>
               <td class="text-center align-middle">{{ $contador }}</td>
-              <td class="text-center align-middle">{{ $usuario->name }}</td>
+              <td class="text-center align-middle">{{ $usuario->nombre }}</td>
+              <td class="text-center align-middle">{{ $usuario->rol }}</td>
               <td class="text-center align-middle">{{ $usuario->email }}</td>    
               <td class="text-center align-middle">
                 @if($usuario->carpetas->isNotEmpty())

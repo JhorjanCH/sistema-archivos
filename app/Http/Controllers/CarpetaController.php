@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Archivo;
 use App\Models\Carpeta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -12,14 +13,28 @@ class CarpetaController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {   
-        $id_user = Auth::user()->id;
-        $carpetas = Carpeta::whereNull('carpeta_padre_id')
-                            ->where('user_id',$id_user)
-                            ->get();
-        return view('admin.mi_unidad.index',['carpetas'=>$carpetas]);
-    }
+
+     public function index()
+     {   
+         $id_user = Auth::user()->id;
+         $carpetas = Carpeta::whereNull('carpeta_padre_id')
+                             ->where('user_id', $id_user)
+                             ->where('borrado', false)
+                             ->get();
+     
+         return view('admin.mi_unidad.index', ['carpetas' => $carpetas]);
+     }
+     
+
+
+    // public function index()
+    // {   
+    //     $id_user = Auth::user()->id;
+    //     $carpetas = Carpeta::whereNull('carpeta_padre_id')
+    //                         ->where('user_id',$id_user)
+    //                         ->get();
+    //     return view('admin.mi_unidad.index',['carpetas'=>$carpetas]);
+    // }
 
     /**
      * Show the form for creating a new resource.
@@ -42,6 +57,7 @@ class CarpetaController extends Controller
             $carpeta = new Carpeta();
             $carpeta->nombre = $request->nombre;
             $carpeta->user_id = $request->user_id;
+            $carpeta->borrado = false;
             $carpeta->save();
 
             return redirect()->route('mi_unidad.index')
@@ -52,17 +68,16 @@ class CarpetaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id) 
-    {
-        $carpeta = Carpeta::findOrFail($id);
-        $subcarpetas = $carpeta->carpetasHijas;
-        $archivos = $carpeta->archivos;
-        return view('admin.mi_unidad.show',compact('carpeta','subcarpetas','archivos'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
+    
+     public function show($id) 
+     {
+         $carpeta = Carpeta::findOrFail($id);
+         $subcarpetas = $carpeta->carpetasHijas()->where('borrado', false)->get();
+         $archivos = $carpeta->archivos()->where('borrado', false)->get();
+         
+         return view('admin.mi_unidad.show', compact('carpeta', 'subcarpetas', 'archivos'));
+     }
+     
     public function edit(string $id)
     {
         //
@@ -102,16 +117,37 @@ class CarpetaController extends Controller
      */
     public function destroy($id)
     {
-        Carpeta::destroy($id);
+        $carpeta = Carpeta::find($id);
 
-        Storage::deleteDirectory($id);
-        Storage::deleteDirectory('public/'.$id);
+        if ($carpeta) {
+            $this->marcarBorradoRecursivo2($carpeta);
+            
+            return redirect()->back()
+                ->with('mensaje', 'Se ha eliminado la subcarpeta y sus contenidos de la manera correcta')
+                ->with('icono', 'success');
+        }
 
         return redirect()->back()
-            ->with('mensaje','Se ha eliminado la carpeta de la manera correcta')
-            ->with('icono','success');
+            ->with('mensaje', 'No se ha encontrado la subcarpeta de la manera correcta')
+            ->with('icono', 'error');
     }
 
+    private function marcarBorradoRecursivo2($carpeta)
+    {
+        $carpeta->borrado = true;
+        $carpeta->save();
+
+        $subcarpetas = Carpeta::where('carpeta_padre_id', $carpeta->id)->get();
+        foreach ($subcarpetas as $subcarpeta) {
+            $this->marcarBorradoRecursivo($subcarpeta);
+        }
+
+        $archivos = Archivo::where('carpeta_id', $carpeta->id)->get();
+        foreach ($archivos as $archivo) {
+            $archivo->borrado = true;
+            $archivo->save();
+        }
+    }
     public function crear_subcarpeta(Request $request) {
 
         $request->validate([
@@ -124,6 +160,7 @@ class CarpetaController extends Controller
         $carpeta->nombre = $request->nombre;
         $carpeta->user_id = $request->user_id;
         $carpeta->carpeta_padre_id = $request->carpeta_padre_id;
+        $carpeta->borrado = false;
         $carpeta->save();
 
         return redirect()->back()
@@ -158,14 +195,40 @@ class CarpetaController extends Controller
     }
 
     public function destroy_subcarpeta($id)
-    {
-        Carpeta::destroy($id);
+{
+        $carpeta = Carpeta::find($id);
 
-        Storage::deleteDirectory($id);
-        Storage::deleteDirectory('public/'.$id);
+        if ($carpeta) {
+            $this->marcarBorradoRecursivo($carpeta);
+            
+            return redirect()->back()
+                ->with('mensaje', 'Se ha eliminado la subcarpeta y sus contenidos de la manera correcta')
+                ->with('icono', 'success');
+        }
 
         return redirect()->back()
-            ->with('mensaje','Se ha eliminado la subcarpeta de la manera correcta')
-            ->with('icono','success');
+            ->with('mensaje', 'No se ha encontrado la subcarpeta de la manera correcta')
+            ->with('icono', 'error');
+    }
+
+    private function marcarBorradoRecursivo($carpeta)
+    {
+        $carpeta->borrado = true;
+        $carpeta->save();
+
+        $subcarpetas = Carpeta::where('carpeta_padre_id', $carpeta->id)->get();
+        foreach ($subcarpetas as $subcarpeta) {
+            $this->marcarBorradoRecursivo($subcarpeta);
+        }
+
+        $archivos = Archivo::where('carpeta_id', $carpeta->id)->get();
+        foreach ($archivos as $archivo) {
+            $archivo->borrado = true;
+            $archivo->save();
+        }
     }
 }
+
+
+
+    

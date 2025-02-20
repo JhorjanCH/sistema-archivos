@@ -20,7 +20,7 @@ class LoginController extends Controller
     protected function authenticated(Request $request, $user)
     {
         // Asumiendo que la columna 'name' en tu base de datos contiene el rol
-        if ($user->name === 'admin') {
+        if ($user->rol === 'admin') {
             return redirect('/')
             ->with('mensaje','BIENVENIDOS AL SISTEMA')
             ->with('icono','success');

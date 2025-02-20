@@ -25,7 +25,7 @@
               </div>
             </div>
           </div>
-          <div class="row">
+          {{-- <div class="row">
             <div class="col-md-12">
               <div class="form-group">
                 <label for="">Email</label>
@@ -35,12 +35,12 @@
                 @enderror
               </div>
             </div>
-          </div>
+          </div> --}}
           <div class="row">
             <div class="col-md-12">
               <div class="form-group">
                 <label for="">Password</label>
-                <input type="password" name="password" class="form-control" required>
+                <input type="password" name="password" class="form-control">
                 @error('password')
                 <small style="color: red">{{$message}}</small>
                 @enderror
@@ -51,7 +51,7 @@
             <div class="col-md-12">
               <div class="form-group">
                 <label for="">Repetir Password</label>
-                <input type="password" name="password_confirmation" class="form-control" required>
+                <input type="password" name="password_confirmation" class="form-control">
               </div>
             </div>
           </div>

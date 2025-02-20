@@ -56,8 +56,8 @@
                   <div class="col-md-12">
                     <div class="form-group">
                       <label for="">Nombre del usuario</label>
-                      <input type="text" value="{{old('name')}}" name="name" class="form-control" required>
-                      @error('name')
+                      <input type="text" value="{{old('nombre')}}" name="nombre" class="form-control" required>
+                      @error('nombre')
                       <small style="color: red">{{$message}}</small>
                       @enderror
                     </div>
