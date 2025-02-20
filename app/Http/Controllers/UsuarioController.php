@@ -110,13 +110,23 @@ class UsuarioController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
-    {
-        User::destroy($id);
-        return redirect()->route('usuarios.index')
-            ->with('mensaje','Se eliminó al usuario de la manera correcta')
-            ->with('icono','success');
-    }
+
+     public function destroy($id)
+     {
+         $usuario = User::findOrFail($id);
+         if ($usuario->name == 'admin') {
+             return redirect()->route('usuarios.index')
+                 ->with('mensaje', 'No se puede eliminar el Administrador')
+                 ->with('icono', 'error');
+         } else {
+             User::destroy($id);
+             return redirect()->route('usuarios.index')
+                 ->with('mensaje', 'Se eliminó al usuario de la manera correcta')
+                 ->with('icono', 'success');
+         }
+         
+     }
+     
 
     public function registro() {
         return view('auth.registro');
