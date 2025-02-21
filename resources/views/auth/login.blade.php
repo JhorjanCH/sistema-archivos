@@ -54,10 +54,10 @@
                 @csrf
 
                 <div class="row mb-12">
-                  <label for="email">{{ __('Email Address') }}</label>
+                  <label for="email">{{ __('Correo') }}</label>
                   <div class="col-md-12">
                     <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
-                      name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                      name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="Ingrese su correo" autofocus>
                     @error('email')
                     <span class="invalid-feedback" role="alert">
                       <strong>{{ $message }}</strong>
@@ -67,11 +67,11 @@
                 </div>
                 <br>
                 <div class="row mb-12">
-                  <label for="password">{{ __('Password') }}</label>
+                  <label for="password">{{ __('Contraseña') }}</label>
 
                   <div class="col-md-12">
                     <input id="password" type="password" class="form-control @error('password') is-invalid @enderror"
-                      name="password" required autocomplete="current-password">
+                      name="password" required autocomplete="current-password" placeholder="***************">
                     @error('password')
                     <span class="invalid-feedback" role="alert">
                       <strong>{{ $message }}</strong>

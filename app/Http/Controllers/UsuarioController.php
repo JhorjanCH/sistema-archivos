@@ -92,13 +92,13 @@ class UsuarioController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'name' => 'required|max:100',
+            'nombre' => 'required|max:100',
 
             
         ]);
 
         $usuario = User::find($id);
-        $usuario->name = $request->name;
+        $usuario->nombre = $request->nombre;
         $usuario->save();
 
         return redirect()->route('usuarios.index')
