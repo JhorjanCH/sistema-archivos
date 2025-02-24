@@ -14,8 +14,16 @@
         <div class="row">
           <div class="col-md-12">
             <div class="form-group">
+              <label for="">Cedula</label>
+              <p>{{$usuario->cedula}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
               <label for="">Nombre del usuario</label>
-              <p>{{$usuario->name}}</p>
+              <p>{{$usuario->nombre." ".$usuario->apellido}}</p>
             </div>
           </div>
         </div>
