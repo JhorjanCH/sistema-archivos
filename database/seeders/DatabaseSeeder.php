@@ -23,7 +23,9 @@ class DatabaseSeeder extends Seeder
         $this->call([RoleSeeder::class]);
 
         User::create([
+            'cedula'=>100000,
             'nombre'=>'Administrador',
+            'apellido'=>'Principal',
             'rol'=>'admin',
             'email'=>'admin@admin.com',
             'password'=>Hash::make('12345678'),
