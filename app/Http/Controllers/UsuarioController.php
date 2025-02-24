@@ -47,13 +47,17 @@ class UsuarioController extends Controller
         //return response()->json($datos);
 
         $request->validate([
+            'cedula' => 'required|max:100',
             'nombre' => 'required|max:100',
+            'apellido' => 'required|max:100',
             'email' => 'required|unique:users',
             'password' => 'required|confirmed',
         ]);
 
         $usuario = new User();
+        $usuario->cedula = $request->cedula;
         $usuario->nombre = $request->nombre;
+        $usuario->apellido = $request->apellido;
         $usuario->rol = "usuario";
         $usuario->email = $request->email;
         $usuario->password = Hash::make($request['password']);
@@ -162,13 +166,17 @@ class UsuarioController extends Controller
         //return response()->json($datos);
 
         $request->validate([
+            'cedula' => 'required|max:100',
             'nombre' => 'required|max:100',
+            'apellido' => 'required|max:100',
             'email' => 'required|unique:users',
             'password' => 'required|confirmed',
         ]);
 
         $usuario = new User();
+        $usuario->cedula = $request->cedula;
         $usuario->nombre = $request->nombre;
+        $usuario->apellido = $request->apellido;
         $usuario->rol = "usuario";
         $usuario->email = $request->email;
         $usuario->password = Hash::make($request['password']);
