@@ -44,7 +44,7 @@
                         <tbody style="height: 50px;">
                             @php
                                 $contador = 0;
-                                $limite = 2; // Número de usuarios por página
+                                $limite = 5; // Número de usuarios por página
                                 $pagina = request()->get('page', 1); // Página actual, por defecto 1
                                 $tareasTotales = $usuarios->count();
                                 $cantidadPaginas = ceil($tareasTotales / $limite);
@@ -58,7 +58,7 @@
                                 @endphp
                                 <tr>
                                     <td class="text-center align-middle">{{ $contador }}</td>
-                                    <td class="text-center align-middle">{{ $usuario->nombre }}</td>
+                                    <td class="text-center align-middle">{{ $usuario->nombre." ".$usuario->apellido }}</td>
                                     <td class="text-center align-middle">{{ $usuario->rol }}</td>
                                     <td class="text-center align-middle">{{ $usuario->email }}</td>
                                     <td class="text-center align-middle">

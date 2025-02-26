@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Carpeta; 
-use App\Models\Archivo; 
+use App\Models\Archivo;
+use Spatie\Permission\Models\Role; 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -85,10 +86,12 @@ class UsuarioController extends Controller
      * Show the form for editing the specified resource.
      */
     public function edit($id)
-    {
-        $usuario = User::findOrFail($id);
-        return view ('admin.usuarios.edit',['usuario'=>$usuario]);
-    }
+{
+    $usuario = User::find($id);
+    $roles = Role::whereIn('name', ['admin', 'usuario'])->get();
+    return view('admin.usuarios.edit', ['usuario' => $usuario, 'roles' => $roles]);
+}
+
 
     /**
      * Update the specified resource in storage.
@@ -102,7 +105,12 @@ class UsuarioController extends Controller
         ]);
 
         $usuario = User::find($id);
+        $usuario->cedula = $request->cedula;
         $usuario->nombre = $request->nombre;
+        $usuario->apellido = $request->apellido;
+        $usuario->rol = $request->rol;
+        $usuario->password = Hash::make($request['password']);
+        
         $usuario->save();
 
         return redirect()->route('usuarios.index')
