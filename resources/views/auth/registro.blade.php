@@ -30,6 +30,16 @@
         color: white;
         text-shadow: 0.1em 0.1em 0.5em black;
     }
+
+    .responsiva {
+        width: 100%;
+    }
+
+    @media (min-width: 576px) {
+        .responsiva {
+            width: 70%;
+        }
+    }
 </style>
 
 <body class="hold-transition login-page"
@@ -37,8 +47,9 @@
       background:no repeat;
       background-size: 100vw 100vh;
       z-index: -3;
-      background-attachment: fixed">
-    <div class="w-50 d-flex flex-column justify-content-center" style="height: 100vh">
+      background-attachment: fixed;">
+
+    <div class="responsiva px-1 d-flex flex-column justify-content-center" style="height: 100vh;">
         <div class="login-logo  animated fadeInUp delay-2s">
             <a href="{{ url('/') }}"><b class="titulo">
                     REGISTRO DE USUARIO</b></a>
@@ -122,8 +133,7 @@
                                             class="btn btn-secondary w-25">Cancelar</a>
                                         <button type="submit" class="btn btn-primary ml-2 w-25"><i
                                                 class="bi bi-floppy2"></i>
-                                            Guardar
-                                            registro</button>
+                                            Crear</button>
                                     </div>
                                 </div>
                             </form>

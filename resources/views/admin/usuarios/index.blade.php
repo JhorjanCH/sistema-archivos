@@ -2,20 +2,21 @@
 
 @section('content')
     <div class="row">
-        <h1>Listado de usuarios</h1>
+        <h1 class="col-12 text-center">Listado de usuarios</h1>
     </div>
     <hr>
     <div class="row">
         <div class="col-md-12">
             <div class="card card-outline card-primary">
-                <div class="card-header">
-                    <h3 class="card-title">Datos registrados</h3>
-                    <div class="card-tools">
+                <div class="card-header d-flex align-items-center">
+                    <h3 class="card-title col-6">Datos registrados</h3>
+                    <div class="card-tools col-6 d-flex justify-content-end">
                         <a href="{{ url('/admin/usuarios/create') }}" class="btn btn-primary">
                             <i class="bi bi-person-fill-add"></i> Nuevo usuario
                         </a>
                     </div>
                 </div>
+
                 <div class="card-body table-responsive">
                     <table class="table table-bordered table-sm table-striped table-hover">
                         <thead>
@@ -58,7 +59,7 @@
                                 @endphp
                                 <tr>
                                     <td class="text-center align-middle">{{ $contador }}</td>
-                                    <td class="text-center align-middle">{{ $usuario->nombre." ".$usuario->apellido }}</td>
+                                    <td class="text-center align-middle">{{ $usuario->nombre . ' ' . $usuario->apellido }}</td>
                                     <td class="text-center align-middle">{{ $usuario->rol }}</td>
                                     <td class="text-center align-middle">{{ $usuario->email }}</td>
                                     <td class="text-center align-middle">
@@ -123,11 +124,14 @@
                             @endforeach
                         </tbody>
                     </table>
+
+
                     <div class="d-flex flex-column align-items-center justify-content-center">
                         <div class="mt-3">
                             Página: {{ $pagina }} / {{ $cantidadPaginas }}
                         </div>
-                        {{-- Generar los enlaces de paginación --}}
+
+
                         <ul class="pagination">
                             @for ($i = 1; $i <= $cantidadPaginas; $i++)
                                 <li class="page-item {{ $pagina == $i ? 'active' : '' }}">

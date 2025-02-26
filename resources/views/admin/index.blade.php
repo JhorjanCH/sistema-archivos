@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="row">
-  <h1>Principal</h1>
+  <h1 class="col-12 text-center">Principal</h1>
 </div>
 <hr>
 <div class="row">

@@ -1,9 +1,10 @@
 @extends('layouts.admin')
 
 @section('content')
-    <div class="row">
-        <h1>Nuevo usuario</h1>
+    <div class="row justify-content-center">
+        <h1 class="col-12 text-center">Nuevo usuario</h1>
     </div>
+
     <div class="row">
         <div class="col-md-12">
             <div class="card card-outline card-primary">
@@ -78,11 +79,10 @@
                         </div>
                         <hr>
                         <div class="row">
-                            <div class="col-md-12 d-flex justify-content-center">
-                                <a href="{{ url('admin/usuarios') }}" class="btn btn-secondary w-25">Cancelar</a>
-                                <button type="submit" class="btn btn-primary ml-2 w-25"><i class="bi bi-floppy2"></i>
-                                    Guardar
-                                    registro</button>
+                            <div class="col-12 d-flex justify-content-center">
+                                <a href="{{ url('admin/usuarios') }}" class="btn btn-secondary w-50 py-2">Cancelar</a>
+                                <button type="submit" class="btn btn-primary ml-2 w-50 py-2"><i class="bi bi-floppy2"></i>
+                                    Crear</button>
                             </div>
                         </div>
                     </form>

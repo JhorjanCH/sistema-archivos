@@ -228,12 +228,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
     <!-- Main Footer -->
     <footer class="main-footer">
-      <!-- To the right -->
-      <div class="float-right d-none d-sm-inline">
-        Anything you want
+      <div class="col-12 text-center">
+        Copyright &copy; 2025. All rights reserved.
       </div>
-      <!-- Default to the left -->
-      <strong>Copyright &copy; 2025.</strong> All rights reserved.
     </footer>
   </div>
   <!-- ./wrapper -->

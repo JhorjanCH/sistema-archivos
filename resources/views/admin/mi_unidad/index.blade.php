@@ -2,15 +2,17 @@
 
 @section('content')
 
-<div class="row mb-2">
-  <div class="col-sm-6">
+<div class="row mb-2 d-flex align-items-center justify-content-center">
+  <div class="col-6 text-left">
     <h1 class="m-0">Mi unidad</h1>
   </div><!-- /.col -->
-  <div class="col-sm-6">
-    <ol class="float-sm-right">
+
+  <div class="col-6 p-0 d-flex justify-content-end">
+    <ol class="float-sm-right d-flex justify-content-center px-0 pr-2">
+      
       <!-- Button trigger modal -->
-      <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModal">
-        <i><i class="bi bi-folder-plus"></i></i> Nueva carpeta
+      <button type="button" class="btn btn-secondary mt-3" data-toggle="modal" data-target="#exampleModal">
+        <i class="bi bi-folder-plus"></i> Nueva carpeta
       </button>
 
       <!-- Modal -->
@@ -46,28 +48,37 @@
     </ol>
   </div><!-- /.col -->
 </div>
+
 <hr>
 <h5>Carpetas</h5>
 <hr>
+
 <div class="row">
   @foreach($carpetas as $carpeta)
-  <div class="col-md-3">
+  
+  <div class="col-md-4">
     <div class="divcontent" data-toggle="tooltip" data-placement="bottom" title="{{$carpeta->nombre}}">
-      <div class="row" style="padding: 10px">
+      <div class="row " style="padding: 10px">
+        
         <div class="col-2" style="text-align: center">
           <i class="bi bi-folder-fill" style="font-size: 20pt;color: {{$carpeta->color}}"></i>
         </div>
+
         <div class="col-8" style="margin-top: 7px">
           <a href="{{url('/admin/mi_unidad/carpeta',$carpeta->id)}}" style="color: black">
             {{$carpeta->nombre}}
           </a>
         </div>
+
         <div class="col-2" style="margin-top: 7px" style="text-align: right">
+          
+          
           <div class="btn-group" role="group">
             <button class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
               <i class="bi bi-three-dots-vertical"></i>
             </button>
-            <div class="dropdown-menu">
+
+            <div style="margin-right: 300px" class="dropdown-menu">
               <a class="dropdown-item" href="#" data-toggle="modal"
                 data-target="#modal_cambiar_nombre{{$carpeta->id}}"><i class="bi bi-pencil"></i> Cambiar
                 nombre
@@ -150,23 +161,34 @@
                 }
               </script>
             </div>
+            
           </div>
         </div>
+
       </div>
     </div>
   </div>
+
+
+
+
+
+
+
 
   <!-- Modal cambiar nombre carpetas-->
   <div class="modal fade" id="modal_cambiar_nombre{{$carpeta->id}}" tabindex="-1" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
+      
       <div class="modal-content">
-        <div class="modal-header">
+        <div class="modal-header  border border-danger">
           <h5 class="modal-title" id="exampleModalLabel">Cambiar nombre</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
+
         <div class="modal-body">
           <form action="{{url('/admin/mi_unidad')}}" method="post">
             @csrf
