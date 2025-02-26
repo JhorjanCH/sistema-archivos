@@ -47,7 +47,7 @@ class UsuarioController extends Controller
         //return response()->json($datos);
 
         $request->validate([
-            'cedula' => 'required|max:100',
+            'cedula' => 'required|unique:users',
             'nombre' => 'required|max:100',
             'apellido' => 'required|max:100',
             'email' => 'required|unique:users',
@@ -166,7 +166,7 @@ class UsuarioController extends Controller
         //return response()->json($datos);
 
         $request->validate([
-            'cedula' => 'required|max:100',
+            'cedula' => 'required|unique:users',
             'nombre' => 'required|max:100',
             'apellido' => 'required|max:100',
             'email' => 'required|unique:users',

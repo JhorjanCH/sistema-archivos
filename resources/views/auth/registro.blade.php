@@ -64,15 +64,15 @@
                                         </div>
                                     </div>
                                     <div class="col-md-6">
-                                      <div class="form-group">
-                                          <label for="">Email</label>
-                                          <input type="email" value="{{ old('email') }}" name="email"
-                                              class="form-control" placeholder="Ingrese su correo" required>
-                                          @error('email')
-                                              <small style="color: red">{{ $message }}</small>
-                                          @enderror
-                                      </div>
-                                  </div>
+                                        <div class="form-group">
+                                            <label for="">Email</label>
+                                            <input type="email" value="{{ old('email') }}" name="email"
+                                                class="form-control" placeholder="Ingrese su correo" required>
+                                            @error('email')
+                                                <small style="color: red">{{ $message }}</small>
+                                            @enderror
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
