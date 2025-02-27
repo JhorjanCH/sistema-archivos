@@ -256,6 +256,23 @@
 
     <hr>
 
+    <style>
+    #tablaArchivos {
+        table-layout: fixed;
+        width: 100%;
+    }
+
+    #tablaArchivos td, #tablaArchivos th {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    #tablaArchivos td:nth-child(2) {
+        max-width: 200px; /* Ajusta este valor según tus necesidades */
+    }
+    </style>
+
     <table id="tablaArchivos" class="table table-hover table-striped">
         <thead>
             <tr>
