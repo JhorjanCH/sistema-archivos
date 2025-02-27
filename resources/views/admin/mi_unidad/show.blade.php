@@ -255,8 +255,8 @@
     </div>
 
     <hr>
-
-    <style>
+ 
+   <style>
     #tablaArchivos {
         table-layout: fixed;
         width: 100%;
@@ -264,14 +264,14 @@
 
     #tablaArchivos td, #tablaArchivos th {
         overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
+        white-space: normal; /* Permite que el texto se ajuste en varias líneas */
     }
 
     #tablaArchivos td:nth-child(2) {
         max-width: 200px; /* Ajusta este valor según tus necesidades */
+        word-wrap: break-word; /* Permite que el texto se divida en varias líneas */
     }
-    </style>
+   </style>
 
     <table id="tablaArchivos" class="table table-hover table-striped">
         <thead>
