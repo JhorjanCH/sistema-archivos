@@ -30,26 +30,14 @@ class ArchivoController extends Controller
    public function eliminar_archivo(Request $request) {
         $id = $request->id;
         $archivo = Archivo::find($id);
-        $estado_archivo = $archivo->estado_archivo;
-        if ($estado_archivo=="PRIVADO"){
-            Storage::delete($archivo->carpeta_id.'/'.$archivo->nombre);
-
-            Archivo::destroy($id);
+        $archivo->borrado = true;
+        $archivo->save();
 
         return redirect()->back()
-           ->with('mensaje', 'Se elimino archivo de la manera correcta')
+           ->with('mensaje', 'Se marcó el archivo como borrado de manera correcta')
            ->with('icono','success');
-        }else {
-            Storage::delete('public/'.$archivo->carpeta_id.'/'.$archivo->nombre);
-            Archivo::destroy($id);
-
-        return redirect()->back()
-            ->with('mensaje', 'Se elimino archivo de la manera correcta')
-            ->with('icono','success');
-            
-        }
-        
-   }
+    }
+}
    public function privado_a_publico(Request $request) {
         $id = $request->id;
         $estado_archivo = "PUBLICO";
