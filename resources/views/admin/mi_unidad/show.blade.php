@@ -121,7 +121,7 @@
                                 <button class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                                     <i class="bi bi-three-dots-vertical"></i>
                                 </button>
-                                <div class="dropdown-menu">
+                                <div margin-right: 300px class="dropdown-menu">
                                     <a class="dropdown-item" href="#" data-toggle="modal"
                                         data-target="#Modal_cambiar_nombre{{ $subcarpeta->id }}"><i
                                             class="bi bi-pencil"></i>
