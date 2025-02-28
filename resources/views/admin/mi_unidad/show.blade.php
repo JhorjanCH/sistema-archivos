@@ -308,7 +308,7 @@
                         <?php
             $nombre = $archivo->nombre;
             $extension = pathinfo($nombre,PATHINFO_EXTENSION);
-            if ($extension == "jpg"){ ?>
+                if ($extension == "jpg"){ ?>
                         <img src="{{ url('/imagenes//iconos/icono_de_jpg.png') }}" alt="" width="25px">
                         <?php
                     }
@@ -326,6 +326,8 @@
                             width="25px"><?php }
                     if ($extension == "mp3") { ?><img src="{{ url('/imagenes//iconos/icono_de_mp3.png') }}"
                             alt="" width="25px"><?php }
+                    if ($extension == "png") { ?><img src="{{ url('/imagenes//iconos/icono_de_png.png') }}"
+                        alt="" width="25px"><?php }
                     
                     ?>
                         <a href="" data-toggle="modal" data-target="#modal_visor{{ $archivo->id }}"
@@ -334,7 +336,7 @@
                         </a>
 
 
-                        <?php if ($extension == "jpg") { ?>
+                        <?php if ($extension == "png") { ?>
                         <!-- Modal -->
                         <div class="modal fade" id="modal_visor{{ $archivo->id }}" tabindex="-1"
                             aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -354,6 +356,27 @@
                             </div>
                         </div>
                         <?php } ?>
+
+                        <?php if ($extension == "jpg") { ?>
+                            <!-- Modal -->
+                            <div class="modal fade" id="modal_visor{{ $archivo->id }}" tabindex="-1"
+                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">{{ $archivo->nombre }}</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body" style="text-align: center">
+                                            <img src="{{ asset('storage/' . $carpeta->id . '/' . $archivo->nombre) }}"
+                                                width="100%" alt="">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <?php } ?>
 
                         <?php if ($extension == "pdf") { ?>
                         <!-- Modal -->
@@ -491,17 +514,39 @@
                             </div>
                         </div>
                         <?php } ?>
+                        <?php if ($extension == "mp3") { ?>
+                        <!-- Modal -->
+                        <div class="modal fade" id="modal_visor{{ $archivo->id }}" tabindex="-1"
+                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">{{ $archivo->nombre }}</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body" style="text-align: center">
+                                        <audio id="my-audio" style="width: 100%;" controls>
+                                            <source src="{{ asset('storage/' . $carpeta->id . '/' . $archivo->nombre) }}"
+                                                type="audio/mp3">
+                                        </audio>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <?php } ?>
 
 
                     </td>
                     <td>{{ $archivo->created_at }}</td>
-                    <td>
+                    <td align="center">
 
                         <div class="btn-group" role="group" aria-label="Basic example">
 
                             <!-- Boton eliminar archivos -->
                             <form action="{{ url('/admin/mi_unidad/carpeta') }}" method="post"
-                                style="text-align: center" method="post" onclick="preguntar{{ $archivo->id }} (event)"
+                                style="text-align: center" method="post" onclick="preguntar_D{{ $archivo->id }} (event)"
                                 id="miFormulario{{ $archivo->id }}">
                                 @csrf
                                 @method('DELETE')
@@ -511,7 +556,7 @@
                                         class="bi bi-trash"></i></button>
                             </form>
                             <script>
-                                function preguntar {{ $archivo->id }}(event) {
+                                function preguntar_D{{ $archivo->id }}(event) {
                                     event.preventDefault();
                                     Swal.fire({
                                         title: 'Eliminar archivo',

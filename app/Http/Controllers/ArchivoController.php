@@ -35,7 +35,7 @@ class ArchivoController extends Controller
         $archivo->save();
 
         return redirect()->back()
-            ->with('mensaje', 'El archivo se elimino de la manera correcta')
+            ->with('mensaje', 'Archivo eliminado')
             ->with('icono', 'success');
     }
 
@@ -56,7 +56,7 @@ class ArchivoController extends Controller
         Storage::move($ruta_archivo_privado, $ruta_archivo_publico);
 
         return redirect()->back()
-            ->with('mensaje', 'Se cambió el estado del archivo de la manera correcta')
+            ->with('mensaje', 'Cambio exitoso')
             ->with('icono', 'success');
     }
 
@@ -77,7 +77,7 @@ class ArchivoController extends Controller
         Storage::move($ruta_archivo_publico, $ruta_archivo_privado);
 
         return redirect()->back()
-            ->with('mensaje', 'Se cambió el estado del archivo de la manera correcta')
+            ->with('mensaje', 'Cambio exitoso')
             ->with('icono', 'success');
     }
 }

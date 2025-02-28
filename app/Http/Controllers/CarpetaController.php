@@ -61,7 +61,7 @@ class CarpetaController extends Controller
             $carpeta->save();
 
             return redirect()->route('mi_unidad.index')
-                ->with('mensaje','Se ha creado la carpeta de la manera correcta')
+                ->with('mensaje','Creación exitosa')
                 ->with('icono','success');
     }
 
@@ -99,7 +99,7 @@ class CarpetaController extends Controller
         $carpeta->save();
 
         return redirect()->route('mi_unidad.index')
-            ->with('mensaje','Se cambio el nombre de la carpeta de la manera correcta')
+            ->with('mensaje','Cambio exitoso')
             ->with('icono','success');
     }
     public function update_color(Request $request)
@@ -123,12 +123,12 @@ class CarpetaController extends Controller
             $this->marcarBorradoRecursivo2($carpeta);
             
             return redirect()->back()
-                ->with('mensaje', 'Se ha eliminado la subcarpeta y sus contenidos de la manera correcta')
+                ->with('mensaje', 'Carpetas y subcarpetas eliminadas')
                 ->with('icono', 'success');
         }
 
         return redirect()->back()
-            ->with('mensaje', 'No se ha encontrado la subcarpeta de la manera correcta')
+            ->with('mensaje', 'No se ha encontrado la subcarpeta')
             ->with('icono', 'error');
     }
 
@@ -164,7 +164,7 @@ class CarpetaController extends Controller
         $carpeta->save();
 
         return redirect()->back()
-            ->with('mensaje','Se ha creado la carpeta de la manera correcta')
+            ->with('mensaje','Creación exitosa')
             ->with('icono','success');
 
     }
@@ -181,7 +181,7 @@ class CarpetaController extends Controller
         $carpeta->save();
 
         return redirect()->back()
-            ->with('mensaje','Se actualizó la carpeta de la manera correcta')
+            ->with('mensaje','Datos actualizado')
             ->with('icono','success');
 
     }
@@ -202,12 +202,12 @@ class CarpetaController extends Controller
             $this->marcarBorradoRecursivo($carpeta);
             
             return redirect()->back()
-                ->with('mensaje', 'Se ha eliminado la subcarpeta y sus contenidos de la manera correcta')
+                ->with('mensaje', 'Carpetas y subcarpetas eliminadas')
                 ->with('icono', 'success');
         }
 
         return redirect()->back()
-            ->with('mensaje', 'No se ha encontrado la subcarpeta de la manera correcta')
+            ->with('mensaje', 'No se ha encontrado la subcarpeta')
             ->with('icono', 'error');
     }
 

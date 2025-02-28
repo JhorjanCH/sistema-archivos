@@ -18,13 +18,31 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="">Cédula</label>
-                                    <input type="text" value="{{ old('cedula') }}" name="cedula" class="form-control"
-                                        placeholder="Ingrese su cédula" required>
+                                    <input type="number" value="{{ old('cedula') }}" name="cedula" id="cedula"
+                                        class="form-control" placeholder="Ingrese su cédula" required>
+                                    <small id="cedulaError" style="color: red; display: none;">La cédula debe
+                                        no puede comenzar con 0 max 8 digitos</small>
                                     @error('cedula')
                                         <small style="color: red">{{ $message }}</small>
                                     @enderror
                                 </div>
                             </div>
+                            <script>
+                                document.getElementById('cedula').addEventListener('input', function(e) {
+                                    var cedula = e.target.value;
+                                    var cedulaError = document.getElementById('cedulaError');
+
+                                    if (cedula.length > 0 && cedula.charAt(0) === '0') {
+                                        e.target.value = '';
+                                        cedulaError.style.display = 'block';
+                                    } else if (cedula.length > 8) {
+                                        e.target.value = cedula.substring(0, 8);
+                                        cedulaError.style.display = 'block';
+                                    } else {
+                                        cedulaError.style.display = 'none';
+                                    }
+                                });
+                            </script>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="">Email</label>
@@ -39,9 +57,9 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="">Nombre</label>
+                                    <label for="nombre">Nombre</label>
                                     <input type="text" value="{{ old('nombre') }}" name="nombre" class="form-control"
-                                        placeholder="Ingrese su nombre" required>
+                                        placeholder="Ingrese su nombre" id="nombre" required >
                                     @error('nombre')
                                         <small style="color: red">{{ $message }}</small>
                                     @enderror
@@ -51,12 +69,25 @@
                                 <div class="form-group">
                                     <label for="">Apellido</label>
                                     <input type="text" value="{{ old('apellido') }}" name="apellido" class="form-control"
-                                        placeholder="Ingrese su apellido" required>
+                                        placeholder="Ingrese su apellido" required id="apellido">
                                     @error('apellido')
                                         <small style="color: red">{{ $message }}</small>
                                     @enderror
                                 </div>
                             </div>
+                            <script>
+                                 document.getElementById('nombre').addEventListener('input', function(e) {
+                                    e.target.value = e.target.value.split(' ').map(function(word) {
+                                        return word.charAt(0).toUpperCase() + word.slice(1);
+                                    }).join(' ');
+                                });
+
+                                document.getElementById('apellido').addEventListener('input', function(e) {
+                                    e.target.value = e.target.value.split(' ').map(function(word) {
+                                        return word.charAt(0).toUpperCase() + word.slice(1);
+                                    }).join(' ');
+                                });
+                            </script>
                         </div>
                         <div class="row">
                             <div class="col-md-6">

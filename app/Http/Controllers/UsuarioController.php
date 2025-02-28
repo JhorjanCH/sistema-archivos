@@ -68,7 +68,7 @@ class UsuarioController extends Controller
         //$usuario->assignRole('usuario');
 
         return redirect()->route('usuarios.index')
-            ->with('mensaje','Se registro al usuario de la manera correcta')
+            ->with('mensaje','Registro exitoso')
             ->with('icono','success');
 
     }
@@ -114,7 +114,7 @@ class UsuarioController extends Controller
         $usuario->save();
 
         return redirect()->route('usuarios.index')
-            ->with('mensaje','Se actualizó al usuario de la manera correcta')
+            ->with('mensaje','Datos actualizados')
             ->with('icono','success');
 
     }
@@ -156,7 +156,7 @@ class UsuarioController extends Controller
              $usuario->borrado = true;
              $usuario->save();
              return redirect()->route('usuarios.index')
-                 ->with('mensaje', 'Se eliminó al usuario de la manera correcta')
+                 ->with('mensaje', 'Usuario eliminado')
                  ->with('icono', 'success');
          }
          
