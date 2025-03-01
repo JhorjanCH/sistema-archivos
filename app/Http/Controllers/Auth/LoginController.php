@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -19,7 +20,7 @@ class LoginController extends Controller
 
     protected function authenticated(Request $request, $user)
     {
-        // Asumiendo que la columna 'name' en tu base de datos contiene el rol
+        // Asumiendo que la columna 'rol' en tu base de datos contiene el rol
         if ($user->rol === 'admin') {
             return redirect('/')
             ->with('mensaje','BIENVENIDOS AL SISTEMA')
@@ -30,6 +31,13 @@ class LoginController extends Controller
             ->with('icono','success');
         }
     }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect('/');
+    }
 }
-
-
