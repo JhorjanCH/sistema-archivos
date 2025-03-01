@@ -6,7 +6,7 @@
 </div>
 <hr>
 <div class="row">
-  @can('admin.index')
+  @can('usuarios.index')
   <div class="col-lg-3 col-6">
     <div class="small-box bg-warning">
       <div class="inner">
