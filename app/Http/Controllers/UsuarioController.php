@@ -97,27 +97,29 @@ class UsuarioController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, $id)
-    {
-        $request->validate([
-            'nombre' => 'required|max:100',
+{
+    $request->validate([
+        'nombre' => 'required|max:100',
+        // otras reglas de validación aquí
+    ]);
 
-            
-        ]);
+    $usuario = User::find($id);
+    $usuario->cedula = $request->cedula;
+    $usuario->nombre = $request->nombre;
+    $usuario->apellido = $request->apellido;
+    $usuario->rol = $request->rol;
 
-        $usuario = User::find($id);
-        $usuario->cedula = $request->cedula;
-        $usuario->nombre = $request->nombre;
-        $usuario->apellido = $request->apellido;
-        $usuario->rol = $request->rol;
-        $usuario->password = Hash::make($request['password']);
-        
-        $usuario->save();
-
-        return redirect()->route('usuarios.index')
-            ->with('mensaje','Datos actualizados')
-            ->with('icono','success');
-
+    // Verificar si se ha proporcionado una nueva contraseña
+    if ($request->filled('password')) {
+        $usuario->password = Hash::make($request->password);
     }
+
+    $usuario->save();
+
+    return redirect()->route('usuarios.index')
+        ->with('mensaje', 'Datos actualizados')
+        ->with('icono', 'success');
+}
 
 
 
