@@ -59,7 +59,8 @@
                                 @endphp
                                 <tr>
                                     <td class="text-center align-middle">{{ $contador }}</td>
-                                    <td class="text-center align-middle">{{ $usuario->nombre . ' ' . $usuario->apellido }}</td>
+                                    <td class="text-center align-middle">{{ $usuario->nombre . ' ' . $usuario->apellido }}
+                                    </td>
                                     <td class="text-center align-middle">{{ $usuario->rol }}</td>
                                     <td class="text-center align-middle">{{ $usuario->email }}</td>
                                     <td class="text-center align-middle">
@@ -68,9 +69,11 @@
                                                 onchange="location = this.value;">
                                                 <option value="">Selecciona una carpeta</option>
                                                 @foreach ($usuario->carpetas as $carpeta)
-                                                    <option value="{{ url('/admin/mi_unidad/carpeta', $carpeta->id) }}">
+                                                    <option
+                                                        class="{{ $carpeta->borrado == true ? 'text-danger' : 'text-dark' }}"
+                                                        value="{{ url('/admin/mi_unidad/carpeta', $carpeta->id) }}">
                                                         <a href="{{ url('/admin/mi_unidad/carpeta', $carpeta->id) }}">
-                                                            {{ $carpeta->nombre }}
+                                                            {{ $carpeta->borrado == true ? "$carpeta->nombre - Eliminada" : "$carpeta->nombre" }}
                                                         </a>
                                                     </option>
                                                 @endforeach
@@ -79,7 +82,6 @@
                                             <span>No hay carpetas creadas</span>
                                         @endif
                                     </td>
-
                                     <td class="text-center align-middle">
                                         <div class="btn-group" role="group" aria-label="Basic example">
                                             <a href="{{ route('usuarios.show', $usuario->id) }}" class="btn btn-info">
