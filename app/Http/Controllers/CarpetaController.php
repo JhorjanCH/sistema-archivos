@@ -227,6 +227,83 @@ class CarpetaController extends Controller
             $archivo->save();
         }
     }
+
+
+public function restaurarCarpeta($id)
+{
+    $carpeta = Carpeta::find($id);
+
+    if ($carpeta) {
+        $this->restaurarRecursivo($carpeta);
+
+        return redirect()->back()
+            ->with('mensaje', 'Carpeta y su contenido restaurados con éxito')
+            ->with('icono', 'success');
+    }
+
+    return redirect()->back()
+        ->with('mensaje', 'Carpeta no encontrada')
+        ->with('icono', 'error');
+}
+
+private function restaurarRecursivo($carpeta)
+{
+    $carpeta->borrado = false;
+    $carpeta->save();
+
+    $subcarpetas = Carpeta::where('carpeta_padre_id', $carpeta->id)->get();
+    foreach ($subcarpetas as $subcarpeta) {
+        $this->restaurarRecursivo($subcarpeta);
+    }
+
+    $archivos = Archivo::where('carpeta_id', $carpeta->id)->get();
+    foreach ($archivos as $archivo) {
+        $archivo->borrado = false;
+        $archivo->save();
+    }
+}
+public function restaurarSubcarpeta($id)
+{
+    $carpeta = Carpeta::find($id);
+
+    if ($carpeta) {
+        $this->restaurarRecursivoSubcarpeta($carpeta);
+
+        return redirect()->back()
+            ->with('mensaje', 'Subcarpeta y su contenido restaurados con éxito')
+            ->with('icono', 'success');
+    }
+
+    return redirect()->back()
+        ->with('mensaje', 'Subcarpeta no encontrada')
+        ->with('icono', 'error');
+}
+
+private function restaurarRecursivoSubcarpeta($carpeta)
+{
+    $carpeta->borrado = false;
+    $carpeta->save();
+
+    $subcarpetas = Carpeta::where('carpeta_padre_id', $carpeta->id)->get();
+    foreach ($subcarpetas as $subcarpeta) {
+        $this->restaurarRecursivoSubcarpeta($subcarpeta);
+    }
+
+    $archivos = Archivo::where('carpeta_id', $carpeta->id)->get();
+    foreach ($archivos as $archivo) {
+        $archivo->borrado = false;
+        $archivo->save();
+    }
+}
+
+
+
+
+
+
+
+
+
 }
 
 
