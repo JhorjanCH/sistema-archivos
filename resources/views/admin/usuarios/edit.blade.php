@@ -15,7 +15,8 @@
                         @csrf
                         @method('PUT')
                         <div class="row">
-                            <div class="form-group">
+                            <div class="col-md-6">
+                                <div class="form-group">
                                     <label for="">Cédula</label>
                                     <input type="number" value="{{ old('cedula') }}" name="cedula" id="cedula"
                                         class="form-control" placeholder="Ingrese su cédula" required>
