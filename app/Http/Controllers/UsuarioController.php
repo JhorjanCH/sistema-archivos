@@ -96,16 +96,12 @@ class UsuarioController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, $id)
-{
-    $request->validate([
+    {
+        $request->validate([
         'nombre' => 'required|max:100',
         'password' => 'nullable|confirmed',
-        'cedula' => ['required', 'regex:/^[1-9]\d{0,7}$/'],
-    ], [
-        'cedula.required' => 'La cédula es obligatoria.',
-        'cedula.regex' => 'La cédula no puede comenzar con un 0 y debe tener un máximo de 8 dígitos.',
     ]);
-    
+
         $usuario = User::find($id);
         $usuario->cedula = $request->cedula;
         $usuario->nombre = $request->nombre;
