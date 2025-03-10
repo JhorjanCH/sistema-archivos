@@ -98,9 +98,9 @@ class UsuarioController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'nombre' => 'required|max:100',
-            // otras reglas de validación aquí
-        ]);
+        'nombre' => 'required|max:100',
+        'password' => 'nullable|confirmed',
+    ]);
 
         $usuario = User::find($id);
         $usuario->cedula = $request->cedula;
