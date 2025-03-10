@@ -15,16 +15,33 @@
                         @csrf
                         @method('PUT')
                         <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
+                            <div class="form-group">
                                     <label for="">Cédula</label>
-                                    <input type="text" value="{{ $usuario->cedula }}" name="cedula" class="form-control"
-                                        required>
-                                    @error('nombre')
+                                    <input type="number" value="{{ old('cedula') }}" name="cedula" id="cedula"
+                                        class="form-control" placeholder="Ingrese su cédula" required>
+                                    <small id="cedulaError" style="color: red; display: none;">La cédula debe
+                                        no puede comenzar con 0 max 8 digitos</small>
+                                    @error('cedula')
                                         <small style="color: red">{{ $message }}</small>
                                     @enderror
                                 </div>
                             </div>
+                            <script>
+                                document.getElementById('cedula').addEventListener('input', function(e) {
+                                    var cedula = e.target.value;
+                                    var cedulaError = document.getElementById('cedulaError');
+
+                                    if (cedula.length > 0 && cedula.charAt(0) === '0') {
+                                        e.target.value = '';
+                                        cedulaError.style.display = 'block';
+                                    } else if (cedula.length > 8) {
+                                        e.target.value = cedula.substring(0, 8);
+                                        cedulaError.style.display = 'block';
+                                    } else {
+                                        cedulaError.style.display = 'none';
+                                    }
+                                });
+                            </script>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="rol">Rol</label>
