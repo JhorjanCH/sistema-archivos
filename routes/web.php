@@ -73,3 +73,8 @@ Route::get('storage/{carpeta}/{archivo}',function ($carpeta,$archivo){
       abort(403,'No tienen permiso para acceder a este archivo');
     }  
 })->name('mostrar.archivo.privados');
+
+
+Route::get('/admin/mi_unidad/restaurar_carpeta/{id}', [App\Http\Controllers\CarpetaController::class, 'restaurarCarpeta'])->name('carpeta.restaurar.carpeta')->middleware('auth');
+
+Route::get('/admin/mi_unidad/restaurar_subcarpeta/{id}', [App\Http\Controllers\CarpetaController::class, 'restaurarSubcarpeta'])->name('carpeta.restaurar.sub_carpeta')->middleware('auth');
