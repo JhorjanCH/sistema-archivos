@@ -51,6 +51,10 @@ Route::delete('/admin/mi_unidad/eliminar_carpeta/{id}', [App\Http\Controllers\Ca
 //ruta eliminar subcarpetas
 Route::delete('/admin/mi_unidad/eliminar_subcarpeta/{id}', [App\Http\Controllers\CarpetaController::class, 'destroy_subcarpeta'])->name('carpeta.destroy.sub_carpeta')->middleware('auth');
 
+Route::get('/admin/mi_unidad/restaurar_carpeta/{id}', [App\Http\Controllers\CarpetaController::class, 'restaurarCarpeta'])->name('carpeta.restaurar.carpeta')->middleware('auth');
+
+Route::get('/admin/mi_unidad/restaurar_subcarpeta/{id}', [App\Http\Controllers\CarpetaController::class, 'restaurarSubcarpeta'])->name('carpeta.restaurar.sub_carpeta')->middleware('auth');
+
 //Rutas para los archivos
 
 Route::post('/admin/mi_unidad/carpeta/upload', [App\Http\Controllers\ArchivoController::class, 'upload'])->name('mi_unidad.archivo.upload')->middleware('auth');
@@ -75,6 +79,3 @@ Route::get('storage/{carpeta}/{archivo}',function ($carpeta,$archivo){
 })->name('mostrar.archivo.privados');
 
 
-Route::get('/admin/mi_unidad/restaurar_carpeta/{id}', [App\Http\Controllers\CarpetaController::class, 'restaurarCarpeta'])->name('carpeta.restaurar.carpeta')->middleware('auth');
-
-Route::get('/admin/mi_unidad/restaurar_subcarpeta/{id}', [App\Http\Controllers\CarpetaController::class, 'restaurarSubcarpeta'])->name('carpeta.restaurar.sub_carpeta')->middleware('auth');
