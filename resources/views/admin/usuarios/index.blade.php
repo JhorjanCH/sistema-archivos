@@ -229,7 +229,10 @@
 
     <script>
         function handleCarpetaSelection(value) {
-            if (!value) return;
+            if (!value || typeof value !== 'string') {
+                console.error('Valor no válido proporcionado');
+                return;
+            }
 
             Swal.fire({
                 title: '¿Qué tipo de restauración deseas?',
@@ -241,10 +244,14 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     // Restaurar carpeta
-                    window.location.href = `/admin/mi_unidad/restaurar_carpeta/${value}`;
+                    const url = "{{ route('carpeta.restaurar.carpeta', ':value') }}".replace(':value',
+                        encodeURIComponent(value));
+                    window.location.href = url;
                 } else if (result.isDenied) {
                     // Restaurar subcarpeta
-                    window.location.href = `/admin/mi_unidad/restaurar_subcarpeta/${value}`;
+                    const url = "{{ route('carpeta.restaurar.sub_carpeta', ':value') }}".replace(':value',
+                        encodeURIComponent(value));
+                    window.location.href = url;
                 }
             });
         }
