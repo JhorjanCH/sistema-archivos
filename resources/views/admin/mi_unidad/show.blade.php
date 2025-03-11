@@ -11,8 +11,7 @@
         <div class="col-sm-6">
             <ol class="float-sm-right">
                 <!-- Button trigger modal -->
-                <a href="{{ url('/admin/mi_unidad') }}" class="btn btn-default"><i class="bi bi-arrow-bar-left"></i>
-                    Volver</a>
+                <a href="javascript:history.back()" class="btn btn-default"><i class="bi bi-arrow-bar-left"></i> Volver</a>
                 <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal_cargar_archivos">
                     <i><i class="bi bi-cloud-upload"></i></i> Subir archivos
                 </button>
@@ -112,10 +111,13 @@
                             <i class="bi bi-folder-fill" style="font-size: 20pt;color: {{ $subcarpeta->color }}"></i>
                         </div>
                         <div class="col-8" style="margin-top: 7px">
-                            <a href="{{ url('/admin/mi_unidad/carpeta', $subcarpeta->id) }}" style="color: black">
-                                {{ $subcarpeta->nombre }}
-                            </a>
-                        </div>
+    <a href="{{ url('/admin/mi_unidad/carpeta', $subcarpeta->id) }}" style="color: black">
+        {{ $subcarpeta->nombre }}
+    </a>
+    <div style="font-size: 12px; color: gray; margin-top: 3px;">
+        {{ $subcarpeta->created_at->format('d/m/Y') }}
+    </div>
+</div>
                         <div class="col-2" style="margin-top: 7px" style="text-align: right">
                             <div class="btn-group" role="group">
                                 <button class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
