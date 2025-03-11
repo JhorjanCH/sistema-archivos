@@ -65,10 +65,13 @@
         </div>
 
         <div class="col-8" style="margin-top: 7px">
-          <a href="{{url('/admin/mi_unidad/carpeta',$carpeta->id)}}" style="color: black">
-            {{$carpeta->nombre}}
-          </a>
-        </div>
+  <a href="{{url('/admin/mi_unidad/carpeta',$carpeta->id)}}" style="color: black">
+    {{$carpeta->nombre}}
+  </a>
+  <div style="font-size: 12px; color: gray; margin-top: 3px;">
+    {{$carpeta->created_at->format('d/m/Y')}}
+  </div>
+</div>
 
         <div class="col-2" style="margin-top: 7px" style="text-align: right">
           
