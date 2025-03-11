@@ -9,22 +9,37 @@ use Illuminate\Support\Facades\Storage;
 class ArchivoController extends Controller
 {
     public function upload(Request $request) {
-        $id = $request->id;
-        $file = $request->file('file');
-        $fileName = time().'-'.$file->getClientOriginalName();
-        $request->file('file')->storeAs($id, $fileName); // Cargar de forma privada
-        
-        $archivo = new Archivo();
-        $archivo->carpeta_id = $request->id;
-        $archivo->nombre = $fileName;
-        $archivo->estado_archivo = 'PRIVADO';
-        $archivo->borrado = false;
-        $archivo->save();
+    $id = $request->id;
+    $file = $request->file('file');
 
-        return redirect()->back()
-            ->with('mensaje', 'Se cargó el archivo de la manera correcta')
-            ->with('icono', 'success');
-    }
+    // Extraer el nombre original sin la extensión
+    $fileName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+
+    // Generar un identificador único alfanumérico de 6 dígitos
+    $uniqueId = substr(str_shuffle('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'), 0, 6);
+
+    // Obtener la extensión del archivo
+    $fileExtension = $file->getClientOriginalExtension();
+
+    // Construir el nombre final
+    $finalFileName = $fileName . '-' . $uniqueId . '.' . $fileExtension;
+
+    // Guardar el archivo
+    $request->file('file')->storeAs($id, $finalFileName);
+
+    // Registrar el archivo en la base de datos
+    $archivo = new Archivo();
+    $archivo->carpeta_id = $request->id;
+    $archivo->nombre = $finalFileName;
+    $archivo->estado_archivo = 'PRIVADO';
+    $archivo->borrado = false;
+    $archivo->save();
+
+    // Redirigir con mensaje de éxito
+    return redirect()->back()
+        ->with('mensaje', 'Se cargó el archivo de la manera correcta')
+        ->with('icono', 'success');
+}
 
     public function eliminar_archivo(Request $request) {
         $id = $request->id;
