@@ -8,9 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Archivo extends Model
 {
     use HasFactory;
-    protected $filable = ['nombre','carpeta_id'];
+
+    protected $table = 'archivos'; // Nombre explícito de la tabla
+    protected $fillable = ['nombre', 'estado_archivo', 'carpeta_id', 'borrado']; // Declaración completa de columnas para asignación masiva
 
     public function carpeta() {
-        return $this->belongsTo(Carpeta::class);
+        return $this->belongsTo(Carpeta::class); // Relación con la tabla carpetas
     }
 }
