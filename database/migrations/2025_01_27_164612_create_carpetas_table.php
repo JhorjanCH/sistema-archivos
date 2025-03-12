@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('color',50)->nullable();
             $table->unsignedBigInteger('carpeta_padre_id')->nullable();
             $table->unsignedBigInteger('user_id');
+            $table->string('estado_carpeta');
             $table->boolean('borrado');
             $table->timestamps();
 

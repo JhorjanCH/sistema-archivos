@@ -31,5 +31,15 @@ class DatabaseSeeder extends Seeder
             'password'=>Hash::make('12345678'),
             'borrado'=>false,
         ])->assignRole('admin');;
+        
+        User::create([
+            'cedula'=>12345678,
+            'nombre'=>'Usuario',
+            'apellido'=>'prueba',
+            'rol'=>'usuario',
+            'email'=>'usuario@admin.com',
+            'password'=>Hash::make('12345678'),
+            'borrado'=>false,
+        ])->assignRole('usuario');;
     }
 }

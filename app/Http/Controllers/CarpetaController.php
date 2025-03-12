@@ -27,15 +27,6 @@ class CarpetaController extends Controller
      
 
 
-    // public function index()
-    // {   
-    //     $id_user = Auth::user()->id;
-    //     $carpetas = Carpeta::whereNull('carpeta_padre_id')
-    //                         ->where('user_id',$id_user)
-    //                         ->get();
-    //     return view('admin.mi_unidad.index',['carpetas'=>$carpetas]);
-    // }
-
     /**
      * Show the form for creating a new resource.
      */
@@ -48,35 +39,43 @@ class CarpetaController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-            $request->validate([
-                'nombre' => 'required|max:191',
+{
+    $request->validate([
+        'nombre' => 'required|max:191',
+    ]);
 
-            ]);
+    $carpeta = new Carpeta();
+    $carpeta->nombre = $request->nombre;
+    $carpeta->user_id = Auth::id(); // Obtén el ID del usuario autenticado
+    $carpeta->estado_carpeta = 'PRIVADO';
+    $carpeta->borrado = false;
+    $carpeta->save();
 
-            $carpeta = new Carpeta();
-            $carpeta->nombre = $request->nombre;
-            $carpeta->user_id = $request->user_id;
-            $carpeta->borrado = false;
-            $carpeta->save();
-
-            return redirect()->route('mi_unidad.index')
-                ->with('mensaje','Creación exitosa')
-                ->with('icono','success');
-    }
+    return redirect()->route('mi_unidad.index')
+        ->with('mensaje', 'Creación exitosa')
+        ->with('icono', 'success');
+}
 
     /**
      * Display the specified resource.
      */
     
-     public function show($id) 
-     {
-         $carpeta = Carpeta::findOrFail($id);
-         $subcarpetas = $carpeta->carpetasHijas()->where('borrado', false)->get();
-         $archivos = $carpeta->archivos()->where('borrado', false)->get();
+
+public function show($id)
+{
+    $carpeta = Carpeta::findOrFail($id);
+
+    // Verifica si el usuario autenticado es el dueño de la carpeta
+    if ($carpeta->user_id !== Auth::id()) {
+        abort(403, 'Acceso denegado'); // Error 403 si el usuario no es el propietario
+    }
+
+    $subcarpetas = $carpeta->carpetasHijas()->where('borrado', false)->get();
+    $archivos = $carpeta->archivos()->where('borrado', false)->get();
          
-         return view('admin.mi_unidad.show', compact('carpeta', 'subcarpetas', 'archivos'));
-     }
+    return view('admin.mi_unidad.show', compact('carpeta', 'subcarpetas', 'archivos'));
+}
+
      
     public function edit(string $id)
     {
@@ -160,6 +159,7 @@ class CarpetaController extends Controller
         $carpeta->nombre = $request->nombre;
         $carpeta->user_id = $request->user_id;
         $carpeta->carpeta_padre_id = $request->carpeta_padre_id;
+        $carpeta->estado_carpeta = 'PRIVADO';
         $carpeta->borrado = false;
         $carpeta->save();
 

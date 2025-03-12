@@ -68,14 +68,33 @@ Route::post('/admin/mi_unidad/carpeta/privado', [App\Http\Controllers\ArchivoCon
 //ruta para cambiar archivos de pública  a privada
 Route::post('/admin/mi_unidad/carpeta/publico', [App\Http\Controllers\ArchivoController::class, 'publico_a_privado'])->name('mi_unidad.archivo.publico.privado')->middleware('auth');
 
-//Ruta para mostrar archivos privados
-Route::get('storage/{carpeta}/{archivo}',function ($carpeta,$archivo){
-    if (Auth::check()) {
-      $path = storage_path('app'.DIRECTORY_SEPARATOR.$carpeta.DIRECTORY_SEPARATOR.$archivo);
-      return response()->file($path);
-    }else {
-      abort(403,'No tienen permiso para acceder a este archivo');
-    }  
+//Mostrar archivos
+Route::get('storage/{carpeta}/{archivo}', function ($carpeta, $archivo) {
+  if (Auth::check()) {
+      // Rutas para archivos públicos y privados
+      $pathPublic = storage_path('app/public/' . $carpeta . DIRECTORY_SEPARATOR . $archivo);
+      $pathPrivate = storage_path('app/' . $carpeta . DIRECTORY_SEPARATOR . $archivo);
+
+      // Verificar si el archivo es público
+      if (file_exists($pathPublic)) {
+          return response()->file($pathPublic);
+      }
+      
+      // Si está en privado, denegar el acceso
+      if (file_exists($pathPrivate)) {
+          abort(403, 'No tienes permiso para acceder a este archivo privado.');
+      }
+
+      // Archivo no encontrado
+      abort(404, 'El archivo no existe.');
+  } else {
+      abort(403, 'No tienes permiso para acceder a este archivo.');
+  }
 })->name('mostrar.archivo.privados');
+
+
+
+
+
 
 
