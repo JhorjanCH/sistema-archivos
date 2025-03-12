@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 /*
 |--------------------------------------------------------------------------
@@ -70,31 +71,40 @@ Route::post('/admin/mi_unidad/carpeta/publico', [App\Http\Controllers\ArchivoCon
 
 //Mostrar archivos
 Route::get('storage/{carpeta}/{archivo}', function ($carpeta, $archivo) {
-  if (Auth::check()) {
-      // Rutas para archivos públicos y privados
-      $pathPublic = storage_path('app/public/' . $carpeta . DIRECTORY_SEPARATOR . $archivo);
-      $pathPrivate = storage_path('app/' . $carpeta . DIRECTORY_SEPARATOR . $archivo);
+    // Verificar si el usuario está autenticado
+    if (Auth::check()) {
+        // Rutas a los archivos públicos y privados
+        $pathPublic = storage_path('app/public/' . $carpeta . DIRECTORY_SEPARATOR . $archivo);
+        $pathPrivate = storage_path('app/' . $carpeta . DIRECTORY_SEPARATOR . $archivo);
 
-      // Verificar si el archivo es público
-      if (file_exists($pathPublic)) {
-          return response()->file($pathPublic);
-      }
-      
-      // Si está en privado, denegar el acceso
-      if (file_exists($pathPrivate)) {
-          abort(403, 'No tienes permiso para acceder a este archivo privado.');
-      }
+        // Verificar si el archivo es público
+        if (file_exists($pathPublic)) {
+            return response()->file($pathPublic); // Entregar el archivo público
+        }
 
-      // Archivo no encontrado
-      abort(404, 'El archivo no existe.');
-  } else {
-      abort(403, 'No tienes permiso para acceder a este archivo.');
-  }
+        // Consultar en la base de datos si el archivo es privado
+        $archivoEnBd = \App\Models\Archivo::where('nombre', $archivo)
+            ->where('estado_archivo', 'privado')
+            ->first();
+
+        if ($archivoEnBd) {
+            // Verificar si el archivo existe físicamente
+            if (file_exists($pathPrivate)) {
+                // Lógica para permitir acceso a usuarios autorizados
+                if (Auth::user()->id === $archivoEnBd->carpeta->user_id || Auth::user()->role === 'admin') {
+                    return response()->file($pathPrivate); // Entregar el archivo privado
+                } else {
+                    abort(403, 'No tienes permiso para acceder a este archivo privado.');
+                }
+            } else {
+                abort(404, 'El archivo privado no existe físicamente.');
+            }
+        }
+
+        // Si no se encontró el archivo en la base de datos
+        abort(404, 'El archivo no existe en la base de datos.');
+    }
+
+    // Denegar acceso si el usuario no está autenticado
+    abort(403, 'No tienes permiso para acceder a este archivo.');
 })->name('mostrar.archivo.privados');
-
-
-
-
-
-
-
