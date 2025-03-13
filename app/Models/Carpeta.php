@@ -8,17 +8,20 @@ use Illuminate\Database\Eloquent\Model;
 class Carpeta extends Model
 {
     use HasFactory;
-    protected $fillable = ['nombre','carpeta_padre_id'];
+    protected $fillable = ['nombre', 'carpeta_padre_id'];
 
-    public function carpetasHijas() {
-        return $this->hasMany(Carpeta::class,'carpeta_padre_id');
+    public function carpetasHijas()
+    {
+        return $this->hasMany(Carpeta::class, 'carpeta_padre_id');
     }
 
-    public function archivos() {
+    public function archivos()
+    {
         return $this->hasMany(Archivo::class);
     }
 
-    public function user() {
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 }

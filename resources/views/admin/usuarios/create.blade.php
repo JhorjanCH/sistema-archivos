@@ -59,7 +59,7 @@
                                 <div class="form-group">
                                     <label for="nombre">Nombre</label>
                                     <input type="text" value="{{ old('nombre') }}" name="nombre" class="form-control"
-                                        placeholder="Ingrese su nombre" id="nombre" required >
+                                        placeholder="Ingrese su nombre" id="nombre" required>
                                     @error('nombre')
                                         <small style="color: red">{{ $message }}</small>
                                     @enderror
@@ -76,7 +76,7 @@
                                 </div>
                             </div>
                             <script>
-                                 document.getElementById('nombre').addEventListener('input', function(e) {
+                                document.getElementById('nombre').addEventListener('input', function(e) {
                                     e.target.value = e.target.value.split(' ').map(function(word) {
                                         return word.charAt(0).toUpperCase() + word.slice(1);
                                     }).join(' ');

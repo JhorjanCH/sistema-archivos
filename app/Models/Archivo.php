@@ -12,7 +12,8 @@ class Archivo extends Model
     protected $table = 'archivos'; // Nombre explícito de la tabla
     protected $fillable = ['nombre', 'estado_archivo', 'carpeta_id', 'borrado']; // Declaración completa de columnas para asignación masiva
 
-    public function carpeta() {
+    public function carpeta()
+    {
         return $this->belongsTo(Carpeta::class); // Relación con la tabla carpetas
     }
 }

@@ -44,9 +44,9 @@
                                     </div>
                                 </div>
                                 <!-- <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                    <button type="submit" class="btn btn-primary">Crear</button>
-                                </div> -->
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                        <button type="submit" class="btn btn-primary">Crear</button>
+                                    </div> -->
                             </form>
                         </div>
                     </div>
@@ -111,13 +111,13 @@
                             <i class="bi bi-folder-fill" style="font-size: 20pt;color: {{ $subcarpeta->color }}"></i>
                         </div>
                         <div class="col-8" style="margin-top: 7px">
-    <a href="{{ url('/admin/mi_unidad/carpeta', $subcarpeta->id) }}" style="color: black">
-        {{ $subcarpeta->nombre }}
-    </a>
-    <div style="font-size: 12px; color: gray; margin-top: 3px;">
-        {{ $subcarpeta->created_at->format('d/m/Y') }}
-    </div>
-</div>
+                            <a href="{{ url('/admin/mi_unidad/carpeta', $subcarpeta->id) }}" style="color: black">
+                                {{ $subcarpeta->nombre }}
+                            </a>
+                            <div style="font-size: 12px; color: gray; margin-top: 3px;">
+                                {{ $subcarpeta->created_at->format('d/m/Y') }}
+                            </div>
+                        </div>
                         <div class="col-2" style="margin-top: 7px" style="text-align: right">
                             <div class="btn-group" role="group">
                                 <button class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
@@ -257,23 +257,27 @@
     </div>
 
     <hr>
- 
-   <style>
-    #tablaArchivos {
-        table-layout: fixed;
-        width: 100%;
-    }
 
-    #tablaArchivos td, #tablaArchivos th {
-        overflow: hidden;
-        white-space: normal; /* Permite que el texto se ajuste en varias líneas */
-    }
+    <style>
+        #tablaArchivos {
+            table-layout: fixed;
+            width: 100%;
+        }
 
-    #tablaArchivos td:nth-child(2) {
-        max-width: 200px; /* Ajusta este valor según tus necesidades */
-        word-wrap: break-word; /* Permite que el texto se divida en varias líneas */
-    }
-   </style>
+        #tablaArchivos td,
+        #tablaArchivos th {
+            overflow: hidden;
+            white-space: normal;
+            /* Permite que el texto se ajuste en varias líneas */
+        }
+
+        #tablaArchivos td:nth-child(2) {
+            max-width: 200px;
+            /* Ajusta este valor según tus necesidades */
+            word-wrap: break-word;
+            /* Permite que el texto se divida en varias líneas */
+        }
+    </style>
 
     <table id="tablaArchivos" class="table table-hover table-striped">
         <thead>
@@ -328,8 +332,9 @@
                             width="25px"><?php }
                     if ($extension == "mp3") { ?><img src="{{ url('/imagenes//iconos/icono_de_mp3.png') }}"
                             alt="" width="25px"><?php }
-                    if ($extension == "png") { ?><img src="{{ url('/imagenes//iconos/icono_de_png.png') }}"
-                        alt="" width="25px"><?php }
+                    if ($extension == "png") { ?><img
+                            src="{{ url('/imagenes//iconos/icono_de_png.png') }}" alt=""
+                            width="25px"><?php }
                     
                     ?>
                         <a href="" data-toggle="modal" data-target="#modal_visor{{ $archivo->id }}"
@@ -360,25 +365,25 @@
                         <?php } ?>
 
                         <?php if ($extension == "jpg") { ?>
-                            <!-- Modal -->
-                            <div class="modal fade" id="modal_visor{{ $archivo->id }}" tabindex="-1"
-                                aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">{{ $archivo->nombre }}</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body" style="text-align: center">
-                                            <img src="{{ asset('storage/' . $carpeta->id . '/' . $archivo->nombre) }}"
-                                                width="100%" alt="">
-                                        </div>
+                        <!-- Modal -->
+                        <div class="modal fade" id="modal_visor{{ $archivo->id }}" tabindex="-1"
+                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">{{ $archivo->nombre }}</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body" style="text-align: center">
+                                        <img src="{{ asset('storage/' . $carpeta->id . '/' . $archivo->nombre) }}"
+                                            width="100%" alt="">
                                     </div>
                                 </div>
                             </div>
-                            <?php } ?>
+                        </div>
+                        <?php } ?>
 
                         <?php if ($extension == "pdf") { ?>
                         <!-- Modal -->
@@ -548,8 +553,8 @@
 
                             <!-- Boton eliminar archivos -->
                             <form action="{{ url('/admin/mi_unidad/carpeta') }}" method="post"
-                                style="text-align: center" method="post" onclick="preguntar_D{{ $archivo->id }} (event)"
-                                id="miFormulario{{ $archivo->id }}">
+                                style="text-align: center" method="post"
+                                onclick="preguntar_D{{ $archivo->id }} (event)" id="miFormulario{{ $archivo->id }}">
                                 @csrf
                                 @method('DELETE')
                                 <input type="text" value="{{ $archivo->id }}" name="id" hidden>

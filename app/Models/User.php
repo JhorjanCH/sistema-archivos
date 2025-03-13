@@ -49,7 +49,8 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function carpeta(){
+    public function carpeta()
+    {
         return $this->hasMany(Carpeta::class);
     }
 

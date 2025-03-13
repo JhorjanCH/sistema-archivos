@@ -18,10 +18,10 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="">Cédula</label>
-                                    <input type="number" value="{{ old('cedula') }}" name="cedula" id="cedula"
-                                        class="form-control" placeholder="Ingrese su cédula" required>
-                                    <small id="cedulaError" style="color: red; display: none;">La cédula debe
-                                        no puede comenzar con 0 max 8 digitos</small>
+                                    <input type="number" value="{{ $usuario->cedula ?? old('cedula') }}" name="cedula"
+                                        id="cedula" class="form-control" placeholder="Ingrese su cédula" required>
+                                    <small id="cedulaError" style="color: red; display: none;">La cédula no puede comenzar
+                                        con 0 y debe tener máximo 8 dígitos</small>
                                     @error('cedula')
                                         <small style="color: red">{{ $message }}</small>
                                     @enderror

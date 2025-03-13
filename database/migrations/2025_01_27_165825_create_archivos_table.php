@@ -20,8 +20,8 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreign('carpeta_id')->references('id')->on('carpetas')
-            ->onUpdate('cascade')
-            ->onDelete('cascade');
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
         });
     }
 

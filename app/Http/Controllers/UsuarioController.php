@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
-use App\Models\Carpeta; 
+use App\Models\Carpeta;
 use App\Models\Archivo;
-use Spatie\Permission\Models\Role; 
+use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -30,7 +30,7 @@ class UsuarioController extends Controller
 
         return view('admin.usuarios.index', ['usuarios' => $usuarios]);
     }
-    
+
     /**
      * Show the form for creating a new resource.
      */
@@ -98,9 +98,9 @@ class UsuarioController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-        'nombre' => 'required|max:100',
-        'password' => 'nullable|confirmed',
-    ]);
+            'nombre' => 'required|max:100',
+            'password' => 'nullable|confirmed',
+        ]);
 
         $usuario = User::find($id);
         $usuario->cedula = $request->cedula;
@@ -129,7 +129,7 @@ class UsuarioController extends Controller
     public function borrado_usuario($id)
     {
         $usuario = User::find($id);
-        
+
         if ($usuario) {
             $usuario->borrado = true;
             $usuario->save();
@@ -163,7 +163,7 @@ class UsuarioController extends Controller
                 ->with('icono', 'success');
         }
     }
-    
+
     public function registro()
     {
         return view('auth.registro');
