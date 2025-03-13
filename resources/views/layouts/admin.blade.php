@@ -174,10 +174,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             @endif
                         @else
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('logout') }}" style="background-color: #d82912"
+                                <a href="{{ route('logout') }}" class="nav-link active" style="background-color: #d82912"
                                     onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                    <i class="nav-icon fas"><i class="bi bi-door-closed"></i></i> Cerrar Sesión
+                                    <i class="nav-icon fas"><i class="bi bi-door-closed"></i></i><p> Cerrar Sesión</p> 
                                 </a>
 
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
