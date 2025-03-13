@@ -108,7 +108,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <img src="{{asset('dist/img/user2-160x160.png')}}" class="img-circle elevation-2" alt="User Image">
           </div>
           <div class="info">
-            <a class="d-block">{{Auth::user()->nombre}}</a>
+            <a class="d-block">{{Auth::user()->email}}</a>
           </div>
         </div>
 
@@ -216,15 +216,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
     </div>
     <!-- /.content-wrapper -->
 
-    <!-- Control Sidebar -->
+    <!-- Control Sidebar
     <aside class="control-sidebar control-sidebar-dark">
-      <!-- Control sidebar content goes here -->
+      Control sidebar content goes here
       <div class="p-3">
         <h5>Title</h5>
         <p>Sidebar content</p>
       </div>
     </aside>
-    <!-- /.control-sidebar -->
+    /.control-sidebar -->
 
     <!-- Main Footer -->
     <footer class="main-footer">
