@@ -60,21 +60,20 @@ class CarpetaController extends Controller
      * Display the specified resource.
      */
 
+public function show($id)
+{
+    $carpeta = Carpeta::findOrFail($id);
 
-    public function show($id)
-    {
-        $carpeta = Carpeta::findOrFail($id);
-
-        // Verifica si el usuario autenticado es el dueño de la carpeta
-        if ($carpeta->user_id !== Auth::id()) {
-            abort(403, 'Acceso denegado'); // Error 403 si el usuario no es el propietario
-        }
-
-        $subcarpetas = $carpeta->carpetasHijas()->where('borrado', false)->get();
-        $archivos = $carpeta->archivos()->where('borrado', false)->get();
-
-        return view('admin.mi_unidad.show', compact('carpeta', 'subcarpetas', 'archivos'));
+    // Verifica si el usuario es el dueño de la carpeta o tiene el rol de admin
+    if ($carpeta->user_id !== Auth::id() && !Auth::user()->hasRole('admin')) {
+        abort(403, 'Acceso denegado'); // Error 403 si no tiene acceso
     }
+
+    $subcarpetas = $carpeta->carpetasHijas()->where('borrado', false)->get();
+    $archivos = $carpeta->archivos()->where('borrado', false)->get();
+
+    return view('admin.mi_unidad.show', compact('carpeta', 'subcarpetas', 'archivos'));
+}
 
 
     public function edit(string $id)
