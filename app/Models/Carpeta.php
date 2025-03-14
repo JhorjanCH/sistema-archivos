@@ -24,4 +24,8 @@ class Carpeta extends Model
     {
         return $this->belongsTo(User::class);
     }
+    public function pesoTotal()
+    {
+        return $this->archivos()->sum('peso');
+    }
 }

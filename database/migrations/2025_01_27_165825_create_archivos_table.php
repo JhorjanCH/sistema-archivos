@@ -16,9 +16,9 @@ return new class extends Migration
             $table->string('nombre');
             $table->string('estado_archivo');
             $table->unsignedBigInteger('carpeta_id');
+            $table->bigInteger('peso')->nullable();
             $table->boolean('borrado');
             $table->timestamps();
-
             $table->foreign('carpeta_id')->references('id')->on('carpetas')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');

@@ -70,7 +70,21 @@
                             <div style="font-size: 12px; color: gray; margin-top: 3px;">
                                 {{ $carpeta->created_at->format('d/m/Y') }}
                             </div>
+                            <div style="font-size: 12px; color: gray; margin-top: 3px;">
+                                Peso total:
+                                @php
+                                    $pesoTotal = $carpeta->archivos()->where('borrado', false)->sum('peso');
+                                @endphp
+                                @if ($pesoTotal < 1000000)
+                                    {{ number_format($pesoTotal / 1024, 2) }} KB
+                                @else
+                                    {{ number_format($pesoTotal / 1048576, 2) }} MB
+                                @endif
+                            </div>
+
+
                         </div>
+
 
                         <div class="col-2" style="margin-top: 7px" style="text-align: right">
 

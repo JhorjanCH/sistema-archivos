@@ -34,6 +34,7 @@ class ArchivoController extends Controller
     $archivo->carpeta_id = $request->id;
     $archivo->nombre = $finalFileName;
     $archivo->estado_archivo = 'PRIVADO';
+    $archivo->peso = $file->getSize();
     $archivo->borrado = false;
     $archivo->save();
 

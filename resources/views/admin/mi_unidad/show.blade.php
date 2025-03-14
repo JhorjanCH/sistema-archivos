@@ -44,9 +44,9 @@
                                     </div>
                                 </div>
                                 <!-- <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                        <button type="submit" class="btn btn-primary">Crear</button>
-                                    </div> -->
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                                <button type="submit" class="btn btn-primary">Crear</button>
+                                            </div> -->
                             </form>
                         </div>
                     </div>
@@ -117,7 +117,19 @@
                             <div style="font-size: 12px; color: gray; margin-top: 3px;">
                                 {{ $subcarpeta->created_at->format('d/m/Y') }}
                             </div>
+                            <div style="font-size: 12px; color: gray; margin-top: 3px;">
+                                @php
+                                    $pesoTotal = $subcarpeta->archivos()->where('borrado', false)->sum('peso');
+                                @endphp
+                                Peso total:
+                                @if ($pesoTotal < 1000000)
+                                    {{ number_format($pesoTotal / 1024, 2) }} KB
+                                @else
+                                    {{ number_format($pesoTotal / 1048576, 2) }} MB
+                                @endif
+                            </div>
                         </div>
+
                         <div class="col-2" style="margin-top: 7px" style="text-align: right">
                             <div class="btn-group" role="group">
                                 <button class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
