@@ -68,10 +68,11 @@
                                 {{ $carpeta->nombre }}
                             </a>
                             <div style="font-size: 12px; color: gray; margin-top: 3px;">
+                                    Fecha:
                                 {{ $carpeta->created_at->format('d/m/Y') }}
                             </div>
                             <div style="font-size: 12px; color: gray; margin-top: 3px;">
-                                Peso total:
+                                Peso:
                                 @php
                                     $pesoTotal = $carpeta->archivos()->where('borrado', false)->sum('peso');
                                 @endphp

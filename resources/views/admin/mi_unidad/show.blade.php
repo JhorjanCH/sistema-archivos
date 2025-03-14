@@ -115,13 +115,14 @@
                                 {{ $subcarpeta->nombre }}
                             </a>
                             <div style="font-size: 12px; color: gray; margin-top: 3px;">
+                                Fecha:
                                 {{ $subcarpeta->created_at->format('d/m/Y') }}
                             </div>
                             <div style="font-size: 12px; color: gray; margin-top: 3px;">
                                 @php
                                     $pesoTotal = $subcarpeta->archivos()->where('borrado', false)->sum('peso');
                                 @endphp
-                                Peso total:
+                                Peso:
                                 @if ($pesoTotal < 1000000)
                                     {{ number_format($pesoTotal / 1024, 2) }} KB
                                 @else
