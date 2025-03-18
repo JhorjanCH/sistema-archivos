@@ -11,7 +11,45 @@
         <div class="col-sm-6">
             <ol class="float-sm-right">
                 <!-- Button trigger modal -->
-                <a href="javascript:history.back()" class="btn btn-default"><i class="bi bi-arrow-bar-left"></i> Volver</a>
+<!-- Botón -->
+<button onclick="retroceder()" class="btn btn-default">
+    <i class="bi bi-arrow-bar-left"></i> Volver
+</button>
+
+<script>
+    // Función para obtener el ID actual desde la URL
+    function getCurrentID() {
+        return parseInt(window.location.pathname.split('/').pop()) || 1;
+    }
+
+    // Guardar el historial en localStorage
+    function guardarIDEnHistorial(id) {
+        let historial = JSON.parse(localStorage.getItem('historial')) || [];
+        if (!historial.includes(id)) {
+            historial.push(id); // Agregar solo si no existe en el historial
+            localStorage.setItem('historial', JSON.stringify(historial));
+        }
+    }
+
+    // Función para retroceder al último ID del historial
+    function retroceder() {
+        let historial = JSON.parse(localStorage.getItem('historial')) || [];
+        if (historial.length > 1) {
+            historial.pop(); // Quitamos el ID actual
+            const lastID = historial[historial.length - 1]; // Obtenemos el último ID
+            localStorage.setItem('historial', JSON.stringify(historial));
+            window.location.href = `/admin/mi_unidad/carpeta/${lastID}`;
+        } else {
+            // Si no hay más carpetas a las que volver, redirigir a la URL indicada
+            window.location.href = "{{ url('/admin/mi_unidad') }}";
+        }
+    }
+
+    // Marcar el ID actual en el historial al cargar la página
+    const currentID = getCurrentID();
+    guardarIDEnHistorial(currentID);
+</script>
+
                 <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal_cargar_archivos">
                     <i><i class="bi bi-cloud-upload"></i></i> Subir archivos
                 </button>
