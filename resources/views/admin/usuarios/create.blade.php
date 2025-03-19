@@ -20,7 +20,7 @@
                                     <label for="">Cédula</label>
                                     <input type="number" value="{{ old('cedula') }}" name="cedula" id="cedula"
                                         class="form-control" placeholder="Ingrese su cédula" required>
-                                    <small id="cedulaError" style="color: red; display: none;">La cédula no puede 
+                                    <small id="cedulaError" style="color: red; display: none;">La cédula no puede
                                         comenzar con 0 y debe tener máximo 8 dígitos</small>
                                     @error('cedula')
                                         <small style="color: red">{{ $message }}</small>

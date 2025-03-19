@@ -9,13 +9,11 @@ use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         $usuarios = User::all();
         $carpetas = Carpeta::all();
         $archivos = Archivo::all();
-        return view('admin.index',compact('usuarios', 'carpetas', 'archivos'));
-        
-
+        return view('admin.index', compact('usuarios', 'carpetas', 'archivos'));
     }
-    
 }

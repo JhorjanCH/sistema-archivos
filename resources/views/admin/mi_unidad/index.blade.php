@@ -68,7 +68,7 @@
                                 {{ $carpeta->nombre }}
                             </a>
                             <div style="font-size: 12px; color: gray; margin-top: 3px;">
-                                    Fecha:
+                                Fecha:
                                 {{ $carpeta->created_at->format('d/m/Y') }}
                             </div>
                             <div style="font-size: 12px; color: gray; margin-top: 3px;">
