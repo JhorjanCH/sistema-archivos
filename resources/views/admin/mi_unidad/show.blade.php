@@ -82,9 +82,9 @@
                                     </div>
                                 </div>
                                 <!-- <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                                    <button type="submit" class="btn btn-primary">Crear</button>
-                                                </div> -->
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                                        <button type="submit" class="btn btn-primary">Crear</button>
+                                                    </div> -->
                             </form>
                         </div>
                     </div>
@@ -696,8 +696,7 @@
                                                     width: 150,
                                                     height: 150
                                                 };
-                                                var texto = encodeURIComponent(
-                                                    "{{ asset('storage/' . $carpeta->id . '/' . $archivo->nombre) }}");
+                                                var texto = "{{ asset('storage/' . $carpeta->id . '/' . $archivo->nombre) }}";
 
                                                 var qrcode = new QRCode("qrcode{{ $archivo->id }}", opciones);
                                                 qrcode.makeCode(texto);
